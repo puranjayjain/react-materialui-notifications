@@ -1,0 +1,7 @@
+{
+  "presets": ["es2015", "react"],
+  "plugins": [
+    "transform-es2015-duplicate-keys",
+    "transform-class-properties"
+  ]
+}
