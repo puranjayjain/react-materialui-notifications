@@ -1,0 +1,35 @@
+{
+  "name": "eact-materialui-notifications",
+  "version": "0.0.1",
+  "description": "Spec compliant notifications for react and material ui users",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/puranjayjain/react-materialui-notifications.git"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browser-sync": "^2.11.0",
+    "browserify": "^13.0.0",
+    "gulp": "^3.9.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-util": "^3.0.1",
+    "pretty-hrtime": "^1.0.1",
+    "require-dir": "^0.3.0",
+    "underscore": "^1.8.3",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^3.6.1"
+  },
+  "dependencies": {
+    "material-ui": "^0.15.1",
+    "react": "^15.1.0",
+    "react-addons-css-transition-group": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-tap-event-plugin": "^1.0.0"
+  }
+}
