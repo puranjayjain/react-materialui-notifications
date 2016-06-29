@@ -57,9 +57,9 @@ export default class ReactMaterialUiNotifications extends Component {
   getStyle = () => {
     const style = {
       position: 'fixed',
-      bottom: '20px',
-      right: '25px',
-      minWidth: '250px'
+      bottom: 20,
+      right: 25,
+      minWidth: 250
     }
 
     return Object.assign(style, this.props.rootStyle)
@@ -166,7 +166,8 @@ class Notification extends Component {
     const style = {
       visibility: this.state.value ? 'visible' : 'collapse',
       textAlign: 'left',
-      borderRadius: '3px'
+      borderRadius: 3,
+      transition: 'none'
     }
 
     return Object.assign(style, this.props.style)
@@ -176,6 +177,28 @@ class Notification extends Component {
     const innerDivStyle = {
       padding: '12px 0 12px 72px',
       opacity: 0.9
+    },
+
+    /**
+    * noTransition is a fix for delayed transition in the item
+    */
+    noTransition = {
+      transition: 'none'
+    },
+
+    iconButtonStyle = {
+      width: 36,
+      height: 36,
+      top: -3,
+      right: 4,
+      padding: 6,
+      transition: 'none'
+    },
+
+    iconStyle = {
+      height: 18,
+      width: 18,
+      transition: 'none'
     }
 
     /**
@@ -185,10 +208,10 @@ class Notification extends Component {
     if (this.props.overflowText) {
       expandedText =
       <span>
-        <Divider inset={true}/>
-        <div style={innerDivStyle}>
-          {this.props.overflowText}
-        </div>
+      <Divider inset={true}/>
+      <div style={innerDivStyle}>
+      {this.props.overflowText}
+      </div>
       </span>
     }
     else {
@@ -216,9 +239,12 @@ class Notification extends Component {
     */
     if (this.props.desktop) {
       desktopClose =
-        <IconButton>
-          <Close />
-        </IconButton>
+      <IconButton
+        style={iconButtonStyle}
+        iconStyle={iconStyle}
+      >
+        <Close />
+      </IconButton>
     }
 
 
@@ -243,6 +269,7 @@ class Notification extends Component {
               leftIcon={this.props.icon}
               insetChildren={true}
               rightIconButton={desktopClose}
+              style={noTransition}
             />
           </List>
           {expandedText}
