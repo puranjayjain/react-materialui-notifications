@@ -150,11 +150,9 @@ class Notification extends Component {
   }
 
   /**
-  * update state when new props are received
   * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
   */
-  componentWillReceiveProps(nextProps) {
-    this.setState({open: nextProps.open})
+  componentWillUnmount() {
   }
 
   /**
@@ -162,7 +160,7 @@ class Notification extends Component {
    */
   getStyle = () => {
     const style = {
-      visibility: this.state.open ? 'visible' : 'collapse',
+      display: this.state.open ? 'block' : 'none',
       textAlign: 'left',
       borderRadius: 3,
       transition: 'none'
@@ -180,7 +178,7 @@ class Notification extends Component {
   render() {
     const innerDivStyle = {
       padding: '12px 0 12px 72px',
-      opacity: 0.9
+      margin: '12px auto'
     },
 
     /**

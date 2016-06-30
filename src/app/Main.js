@@ -1,7 +1,7 @@
 /**
- * In this file, we create a React component
- * which incorporates components providedby material-ui.
- */
+* In this file, we create a React component
+* which incorporates components providedby material-ui.
+*/
 import React, {Component} from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import {deepOrange500} from 'material-ui/styles/colors'
@@ -15,9 +15,8 @@ const styles = {
     textAlign: 'center',
     paddingTop: 200,
   },
-}
-
-const muiTheme = getMuiTheme({
+},
+muiTheme = getMuiTheme({
   palette: {
     accent1Color: deepOrange500,
   },
@@ -25,12 +24,22 @@ const muiTheme = getMuiTheme({
 
 class Main extends Component {
   state = {
-    open: false
+    Notifications: []
   }
 
   handleTouchTap = () => {
+    let tempNotifications = this.state.Notifications
+    tempNotifications.push(
+      {
+        title: 'Title',
+        additionalText: `Some message to be displayed ${tempNotifications.length}`,
+        open: true,
+        icon: <CommunicationCall color={deepOrange500}/>,
+        overflowText: <div>joe</div>
+      }
+    )
     this.setState({
-      open: true
+      Notifications: tempNotifications
     })
   }
 
@@ -46,13 +55,7 @@ class Main extends Component {
           <ReactMaterialUiNotifications
             desktop={true}
             zDepth={2}
-            children={{
-              title: 'Title',
-              additionalText: 'Some message to be displayed',
-              open: this.state.open,
-                icon: <CommunicationCall color={deepOrange500}/>,
-              overflowText: <div>joe</div>
-            }}
+            children={this.state.Notifications}
           />
         </div>
       </MuiThemeProvider>
