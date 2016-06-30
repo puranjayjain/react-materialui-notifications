@@ -24,19 +24,13 @@ const muiTheme = getMuiTheme({
 })
 
 class Main extends Component {
-  constructor(props, context) {
-    super(props, context)
-
-    this.handleTouchTap = this.handleTouchTap.bind(this)
-
-    this.state = {
-      open: false
-    }
+  state = {
+    open: false
   }
 
-  handleTouchTap() {
+  handleTouchTap = () => {
     this.setState({
-      open: !this.state.open
+      open: true
     })
   }
 
@@ -45,7 +39,7 @@ class Main extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
           <RaisedButton
-            label="Toggle Notification"
+            label="Open Notification"
             secondary={true}
             onTouchTap={this.handleTouchTap}
           />
@@ -55,7 +49,7 @@ class Main extends Component {
             children={{
               title: 'Title',
               additionalText: 'Some message to be displayed',
-              value: this.state.open,
+              open: this.state.open,
                 icon: <CommunicationCall color={deepOrange500}/>,
               overflowText: <div>joe</div>
             }}

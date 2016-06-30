@@ -134,37 +134,46 @@ class Notification extends Component {
     */
     overflowContent: PropTypes.element,
     /**
-    * value which tells whether to display the message
+    * open which tells whether to display the message
     */
-    value: PropTypes.bool
+    open: PropTypes.bool
   }
 
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
   }
 
-  //keep tooltip state
-  state = {
-    /**
-    * checkbox state of the main dialog checkbox
-    */
-    value: this.props.value
+  /**
+   * copy value on initial render
+   */
+  componentWillMount() {
+    this.setState({
+      open: this.props.open
+    })
+  }
+
+  /**
+   * do clean up logic here
+  * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
+   */
+  componentWillUnmount() {
+
   }
 
   /**
   * update state when new props are received
-  * TODO cancel the settimeout function of the autohide method if the value is changed before timeout ends
+  * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
   */
   componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.setState({value: nextProps.value})
-    }
+    this.setState({open: nextProps.open})
   }
 
-  // merge local styles and overriding styles and return it
+  /**
+   * merge local styles and overriding styles and return it
+   */
   getStyle = () => {
     const style = {
-      visibility: this.state.value ? 'visible' : 'collapse',
+      visibility: this.state.open ? 'visible' : 'collapse',
       textAlign: 'left',
       borderRadius: 3,
       transition: 'none'
@@ -172,6 +181,12 @@ class Notification extends Component {
 
     return Object.assign(style, this.props.style)
   }
+
+  /**
+   * hide notification on click of the close button
+   * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
+   */
+  onCloseNotification = () => this.setState({open: false})
 
   render() {
     const innerDivStyle = {
@@ -208,10 +223,10 @@ class Notification extends Component {
     if (this.props.overflowText) {
       expandedText =
       <span>
-      <Divider inset={true}/>
-      <div style={innerDivStyle}>
-      {this.props.overflowText}
-      </div>
+        <Divider inset={true}/>
+        <div style={innerDivStyle}>
+          {this.props.overflowText}
+        </div>
       </span>
     }
     else {
@@ -242,6 +257,7 @@ class Notification extends Component {
       <IconButton
         style={iconButtonStyle}
         iconStyle={iconStyle}
+        onTouchTap={this.onCloseNotification}
       >
         <Close />
       </IconButton>
