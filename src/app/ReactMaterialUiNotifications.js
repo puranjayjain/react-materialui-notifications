@@ -118,13 +118,9 @@ class Notification extends Component {
     */
     icon: PropTypes.element,
     /**
-    * Override the inline-styles of the root element.
+    * open which tells whether to display the message
     */
-    style: PropTypes.object,
-    /**
-    * notification title
-    */
-    title: PropTypes.string,
+    open: PropTypes.bool,
     /**
     * additional overflow text
     */
@@ -134,30 +130,23 @@ class Notification extends Component {
     */
     overflowContent: PropTypes.element,
     /**
-    * open which tells whether to display the message
+    * Override the inline-styles of the root element.
     */
-    open: PropTypes.bool
+    style: PropTypes.object,
+    /**
+    * notification title
+    */
+    title: PropTypes.string
   }
 
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
   }
 
-  /**
-   * copy value on initial render
-   */
   componentWillMount() {
     this.setState({
       open: this.props.open
     })
-  }
-
-  /**
-   * do clean up logic here
-  * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
-   */
-  componentWillUnmount() {
-
   }
 
   /**
@@ -262,7 +251,6 @@ class Notification extends Component {
         <Close />
       </IconButton>
     }
-
 
     return (
       <ReactCSSTransitionGroup

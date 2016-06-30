@@ -39,7 +39,7 @@ class Main extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
           <RaisedButton
-            label="Open Notification"
+            label="Toggle Notification"
             secondary={true}
             onTouchTap={this.handleTouchTap}
           />
