@@ -10,6 +10,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ReactMaterialUiNotifications from './ReactMaterialUiNotifications'
 
+import moment from 'moment'
+
 const styles = {
   container: {
     textAlign: 'center',
@@ -48,7 +50,7 @@ class Main extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
           <RaisedButton
-            label="Toggle Notification"
+            label="Show Notification"
             secondary={true}
             onTouchTap={this.handleTouchTap}
           />

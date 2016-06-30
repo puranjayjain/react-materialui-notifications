@@ -40,10 +40,6 @@ export default class ReactMaterialUiNotifications extends Component {
     transitionEnterTimeout: PropTypes.number,
     transitionLeaveTimeout: PropTypes.number,
     /**
-    * do you want to show timestamp
-    */
-    timestamp: PropTypes.bool,
-    /**
     * This number represents the zDepth of the paper shadow covering the message.
     */
     zDepth: propTypes.zDepth
@@ -136,7 +132,11 @@ class Notification extends Component {
     /**
     * notification title
     */
-    title: PropTypes.string
+    title: PropTypes.string,
+    /**
+    * timestamp you want to display
+    */
+    timestamp: PropTypes.string
   }
 
   static contextTypes = {
@@ -201,6 +201,10 @@ class Notification extends Component {
       height: 18,
       width: 18,
       transition: 'none'
+    },
+
+    overflowStyle = {
+      padding: '12px 0 12px 72px'
     }
 
     /**
@@ -211,7 +215,7 @@ class Notification extends Component {
       expandedText =
       <span>
         <Divider inset={true}/>
-        <div style={innerDivStyle}>
+        <div style={overflowStyle}>
           {this.props.overflowText}
         </div>
       </span>
@@ -227,7 +231,7 @@ class Notification extends Component {
       expandedAction =
       <span>
         <Divider inset={true}/>
-        <div style={innerDivStyle}>
+        <div style={overflowStyle}>
           {this.props.overflowContent}
         </div>
       </span>
