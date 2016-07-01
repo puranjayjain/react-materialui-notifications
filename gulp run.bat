@@ -1,1 +1,2 @@
-gulp default --NODE-ENVIRONMENT=development
+set  NODE_ENV=development
+gulp default

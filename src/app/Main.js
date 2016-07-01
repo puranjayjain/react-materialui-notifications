@@ -3,6 +3,7 @@
 * which incorporates components providedby material-ui.
 */
 import React, {Component} from 'react'
+import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 import {deepOrange500} from 'material-ui/styles/colors'
 import IconButton from 'material-ui/IconButton'
@@ -23,7 +24,6 @@ import {ComponentData, NotificationData} from './Data'
 const styles = {
   appbar: {
     background: deepOrange500,
-    marginBottom: 15,
     textAlign: 'left'
   },
   container: {
@@ -51,6 +51,13 @@ const styles = {
   },
   table2Col3: {
     width: 36
+  },
+  paper: {
+    width: '100%',
+    textAlign: 'left',
+    marginBottom: 15,
+    padding: 15,
+    fontSize: 18
   },
   rightIcon: {
     width: 36,
@@ -124,6 +131,20 @@ export default class Main extends Component {
               </a>
             }
           />
+          <Paper
+            style={styles.paper}
+            zDepth={0}
+          >
+            <p>
+              Spec compliant notifications for react and material ui users
+            </p>
+            <p>
+              <strong>Install from npm</strong>
+            </p>
+            <p>
+              <code>npm i react-materialui-notifications</code>
+            </p>
+          </Paper>
           <RaisedButton
             label="Show Notification"
             onTouchTap={this.showNotification}
