@@ -29,7 +29,8 @@ muiTheme = getMuiTheme({
 
 class Main extends Component {
   state = {
-    Notifications: []
+    Notifications: [],
+    count: 0
   }
 
   showNotification = () => {
@@ -37,7 +38,7 @@ class Main extends Component {
     tempNotifications.push(
       {
         title: 'Title',
-        additionalText: `Some message to be displayed ${tempNotifications.length}, we could be beautiful`,
+        additionalText: `Some message to be displayed ${this.state.count}`,
         open: true,
         icon: <Message />,
         iconBadgeColor: deepOrange500,
@@ -46,7 +47,8 @@ class Main extends Component {
       }
     )
     this.setState({
-      Notifications: tempNotifications
+      Notifications: tempNotifications,
+      count: ++this.state.count
     })
   }
 
@@ -55,7 +57,7 @@ class Main extends Component {
     tempNotifications.push(
       {
         title: 'Title',
-        additionalText: `Some message to be displayed ${tempNotifications.length}, we could be beautiful`,
+        additionalText: `Some message to be displayed ${this.state.count}`,
         open: true,
         icon: <CommunicationCall />,
         iconBadgeColor: deepOrange500,
@@ -66,7 +68,8 @@ class Main extends Component {
       }
     )
     this.setState({
-      Notifications: tempNotifications
+      Notifications: tempNotifications,
+      count: ++this.state.count
     })
   }
 

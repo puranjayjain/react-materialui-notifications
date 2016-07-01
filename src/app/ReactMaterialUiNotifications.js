@@ -48,7 +48,7 @@ export default class ReactMaterialUiNotifications extends Component {
   * default props
   */
   static defaultProps = {
-    maxNotifications: 5,
+    maxNotifications: 3,
     rootStyle: {
       bottom: 20,
       right: 25
@@ -80,8 +80,11 @@ export default class ReactMaterialUiNotifications extends Component {
     */
     if (innerData.length > this.props.maxNotifications) {
       for (let i in innerData) {
-        if (!innerData[i].priority) {
-          innerData = innerData.splice(i, 1)
+        if (typeof innerData[i] === 'object' && (!innerData[i].hasOwnProperty('priority') || !innerData[i].priority)) {
+          innerData.splice(i, 1)
+          if (innerData.length === this.props.maxNotifications) {
+            break
+          }
         }
       }
     }
