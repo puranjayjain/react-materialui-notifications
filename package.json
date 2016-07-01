@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/puranjayjain/react-materialui-notifications.git"
   },
+  "main": "build/ReactMaterialUiNotifications.js",
   "scripts": {
     "start": "gulp"
   },
@@ -20,13 +21,17 @@
     "browserify": "^13.0.1",
     "gulp": "^3.9.1",
     "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.4",
     "gulp-util": "^3.0.7",
+    "moment": "^2.13.0",
     "pretty-hrtime": "^1.0.2",
+    "pump": "^1.0.1",
+    "recompose": "^0.20.2",
     "require-dir": "^0.3.0",
     "underscore": "^1.8.3",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0",
-    "moment": "^2.13.0"
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "material-ui": "^0.15.1",

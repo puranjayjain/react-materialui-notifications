@@ -103,6 +103,7 @@ export default class ReactMaterialUiNotifications extends Component {
       >
         {innerData.map((props, index) => {
           return <Notification
+            open={true}
             desktop={this.props.desktop}
             index={index}
             key={index}
@@ -140,10 +141,6 @@ class Notification extends Component {
     * left avatar image to be displayed in personalised notification
     */
     avatar: PropTypes.element,
-    /**
-    * Desktop device or touch device
-    */
-    desktop: PropTypes.bool,
     /**
     * key for the underlying transition
     */

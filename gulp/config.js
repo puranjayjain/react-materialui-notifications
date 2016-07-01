@@ -19,14 +19,20 @@ module.exports = {
   },
   browserify: {
     // Enable source maps
-    debug: true,
+    debug: false,
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
       entries: src + '/app/app.js',
       dest: dest,
       outputName: 'app.js'
-    }],
+    },
+    {
+      entries: src + '/app/ReactMaterialUiNotifications.js',
+      dest: dest,
+      outputName: 'ReactMaterialUiNotifications.js'
+    }
+  ],
     extensions: ['.js'],
   }
 };

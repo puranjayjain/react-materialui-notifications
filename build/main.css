@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  margin: 0;
   font-size: 13px;
   line-height: 20px;
   background-color: #ccc;
