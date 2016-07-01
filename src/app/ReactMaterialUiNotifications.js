@@ -5,8 +5,6 @@ import React, {PropTypes, cloneElement, Component} from 'react'
 import propTypes from 'material-ui/utils/propTypes'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import {deepOrange500} from 'material-ui/styles/colors'
-
 import Paper from 'material-ui/Paper'
 import {List, ListItem} from 'material-ui/List'
 import Divider from 'material-ui/Divider'
@@ -29,10 +27,13 @@ export default class ReactMaterialUiNotifications extends Component {
     */
     desktop: PropTypes.bool,
     /**
+    * maximum number of notifications to display
+    */
+    maxNotifications: PropTypes.number,
+    /**
     * root component's style
     */
     rootStyle: PropTypes.object,
-
     /**
     * all exposed props of react css transition properties
     */
@@ -40,11 +41,18 @@ export default class ReactMaterialUiNotifications extends Component {
     transitionEnter: PropTypes.bool,
     transitionLeave: PropTypes.bool,
     transitionEnterTimeout: PropTypes.number,
-    transitionLeaveTimeout: PropTypes.number,
-    /**
-    * This number represents the zDepth of the paper shadow covering the message.
-    */
-    zDepth: propTypes.zDepth
+    transitionLeaveTimeout: PropTypes.number
+  }
+
+  /**
+  * default props
+  */
+  static defaultProps = {
+    maxNotifications: 5,
+    rootStyle: {
+      bottom: 20,
+      right: 25
+    }
   }
 
   static contextTypes = {
@@ -55,19 +63,36 @@ export default class ReactMaterialUiNotifications extends Component {
   getStyle = () => {
     const style = {
       position: 'fixed',
-      bottom: 20,
-      right: 25,
       minWidth: 250
     }
 
     return Object.assign(style, this.props.rootStyle)
   }
 
+  /**
+  * perform operations like capping on the operations before doing them
+  */
+  getInnerData = () => {
+    let innerData = this.props.children.constructor === Array ? this.props.children : [this.props.children]
+    /**
+    * remove the excess notifications,
+    * TODO safely remove them with animation, by passing open as false and doing newprops forcefully change the old one with willreceivenewprops function
+    */
+    if (innerData.length > this.props.maxNotifications) {
+      for (let i in innerData) {
+        if (!innerData[i].priority) {
+          innerData = innerData.splice(i, 1)
+        }
+      }
+    }
+    return innerData
+  }
+
   render() {
     /**
     * convert object to array
     */
-    let innerData = this.props.children.constructor === Array ? this.props.children : [this.props.children]
+    let innerData = this.getInnerData()
 
     return (
       <div
@@ -75,9 +100,14 @@ export default class ReactMaterialUiNotifications extends Component {
       >
         {innerData.map((props, index) => {
           return <Notification
-            key={index}
-            index={index}
             desktop={this.props.desktop}
+            index={index}
+            key={index}
+            transitionName={this.props.transitionName}
+            transitionEnter={this.props.transitionEnter}
+            transitionLeave={this.props.transitionLeave}
+            transitionEnterTimeout={this.props.transitionEnterTimeout}
+            transitionLeaveTimeout={this.props.transitionLeaveTimeout}
             {...props}
           />
         })}
@@ -119,6 +149,14 @@ class Notification extends Component {
     * notification icon on the left
     */
     icon: PropTypes.element,
+    /*
+    * icon surrounding badge color
+    */
+    iconBadgeColor: PropTypes.string,
+    /**
+    * icon color
+    */
+    iconFillColor: PropTypes.string,
     /**
     * open which tells whether to display the message
     */
@@ -136,6 +174,10 @@ class Notification extends Component {
     */
     personalised: PropTypes.bool,
     /**
+    * it is a priority notification
+    */
+    priority: PropTypes.bool,
+    /**
     * Override the inline-styles of the root element.
     */
     style: PropTypes.object,
@@ -146,7 +188,19 @@ class Notification extends Component {
     /**
     * timestamp you want to display
     */
-    timestamp: PropTypes.string
+    timestamp: PropTypes.string,
+    /**
+    * This number represents the zDepth of the paper shadow covering the message.
+    */
+    zDepth: propTypes.zDepth
+  }
+
+  /**
+  * default props
+  */
+  static defaultProps = {
+    iconFillColor: '#fff',
+    zDepth: 1
   }
 
   static contextTypes = {
@@ -218,7 +272,7 @@ class Notification extends Component {
       margin: 0,
       left: 8,
       borderRadius: '50%',
-      backgroundColor: deepOrange500,
+      backgroundColor: this.props.iconBadgeColor,
       justifyContent: 'center',
       alignItems: 'center',
       display: 'flex'
@@ -247,7 +301,10 @@ class Notification extends Component {
     /**
     * modify icon prop
     */
-    let leftIcon = cloneElement(this.props.icon, {color: '#fff',style: leftIconStyle}),
+    let leftIcon = cloneElement(this.props.icon, {
+      color: this.props.iconFillColor,
+      style: leftIconStyle
+    }),
     leftIconBody = <div style={leftIconBodyStyle}>{leftIcon}</div>
 
     /**

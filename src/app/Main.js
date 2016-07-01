@@ -5,9 +5,12 @@
 import React, {Component} from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import {deepOrange500} from 'material-ui/styles/colors'
-import CommunicationCall from 'material-ui/svg-icons/communication/call'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
+import CommunicationCall from 'material-ui/svg-icons/communication/call'
+import Message from 'material-ui/svg-icons/communication/message'
+
 import ReactMaterialUiNotifications from './ReactMaterialUiNotifications'
 
 import moment from 'moment'
@@ -16,7 +19,7 @@ const styles = {
   container: {
     textAlign: 'center',
     paddingTop: 200,
-  },
+  }
 },
 muiTheme = getMuiTheme({
   palette: {
@@ -29,7 +32,25 @@ class Main extends Component {
     Notifications: []
   }
 
-  handleTouchTap = () => {
+  showNotification = () => {
+    let tempNotifications = this.state.Notifications
+    tempNotifications.push(
+      {
+        title: 'Title',
+        additionalText: `Some message to be displayed ${tempNotifications.length}, we could be beautiful`,
+        open: true,
+        icon: <Message />,
+        iconBadgeColor: deepOrange500,
+        overflowText: <div>joe</div>,
+        timestamp: moment().format('h:mm A')
+      }
+    )
+    this.setState({
+      Notifications: tempNotifications
+    })
+  }
+
+  showPriorityNotification = () => {
     let tempNotifications = this.state.Notifications
     tempNotifications.push(
       {
@@ -37,8 +58,11 @@ class Main extends Component {
         additionalText: `Some message to be displayed ${tempNotifications.length}, we could be beautiful`,
         open: true,
         icon: <CommunicationCall />,
+        iconBadgeColor: deepOrange500,
         overflowText: <div>joe</div>,
-        timestamp: moment().format('h:mm A')
+        timestamp: moment().format('h:mm A'),
+        priority: true,
+        zDepth: 4
       }
     )
     this.setState({
@@ -52,12 +76,15 @@ class Main extends Component {
         <div style={styles.container}>
           <RaisedButton
             label="Show Notification"
+            onTouchTap={this.showNotification}
+          />
+          <RaisedButton
+            label="Show Priority Notification"
             secondary={true}
-            onTouchTap={this.handleTouchTap}
+            onTouchTap={this.showPriorityNotification}
           />
           <ReactMaterialUiNotifications
             desktop={false}
-            zDepth={2}
             children={this.state.Notifications}
           />
         </div>
