@@ -1,9 +1,11 @@
 /**
 *  material design spec compliant notifications for react and material-ui users
 */
-import React, {PropTypes, Component} from 'react'
+import React, {PropTypes, cloneElement, Component} from 'react'
 import propTypes from 'material-ui/utils/propTypes'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+import {deepOrange500} from 'material-ui/styles/colors'
 
 import Paper from 'material-ui/Paper'
 import {List, ListItem} from 'material-ui/List'
@@ -102,6 +104,10 @@ class Notification extends Component {
     */
     autoHide: PropTypes.number,
     /**
+    * left avatar image to be displayed in personalised notification
+    */
+    avatar: PropTypes.element,
+    /**
     * Desktop device or touch device
     */
     desktop: PropTypes.bool,
@@ -125,6 +131,10 @@ class Notification extends Component {
     * additional overflow content, like buttons
     */
     overflowContent: PropTypes.element,
+    /**
+    * is personalised notification or not
+    */
+    personalised: PropTypes.bool,
     /**
     * Override the inline-styles of the root element.
     */
@@ -156,36 +166,39 @@ class Notification extends Component {
   }
 
   /**
-   * merge local styles and overriding styles and return it
-   */
+  * merge local styles and overriding styles and return it
+  */
   getStyle = () => {
     const style = {
       display: this.state.open ? 'block' : 'none',
       textAlign: 'left',
       borderRadius: 3,
-      transition: 'none'
+      transition: 'none',
+      margin: '12px auto'
     }
 
     return Object.assign(style, this.props.style)
   }
 
   /**
-   * hide notification on click of the close button
-   * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
-   */
+  * hide notification on click of the close button
+  * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
+  */
   onCloseNotification = () => this.setState({open: false})
 
   render() {
-    const innerDivStyle = {
-      padding: '12px 0 12px 72px',
-      margin: '12px auto'
+    const listStyle = {
+      position: 'relative'
     },
 
-    /**
-    * noTransition is a fix for delayed transition in the item
-    */
-    noTransition = {
-      transition: 'none'
+    listItemStyle = {
+      transition: 'none',
+      padding: '8px 8px 0 72px'
+    },
+
+    secondaryTextStyle = {
+      marginTop: 8,
+      marginBottom: 8
     },
 
     iconButtonStyle = {
@@ -197,10 +210,34 @@ class Notification extends Component {
       transition: 'none'
     },
 
+    leftIconBodyStyle = {
+      height: 32,
+      width: 32,
+      top: 4,
+      padding: 6,
+      margin: 0,
+      left: 8,
+      borderRadius: '50%',
+      backgroundColor: deepOrange500,
+      justifyContent: 'center',
+      alignItems: 'center',
+      display: 'flex'
+    },
+
+    leftIconStyle = {
+      margin: 0
+    },
+
     iconStyle = {
       height: 18,
       width: 18,
       transition: 'none'
+    },
+
+    timestampStyle = {
+      position: 'absolute',
+      right: this.props.desktop ? 42 : 8,
+      top: 12
     },
 
     overflowStyle = {
@@ -208,9 +245,21 @@ class Notification extends Component {
     }
 
     /**
+    * modify icon prop
+    */
+    let leftIcon = cloneElement(this.props.icon, {color: '#fff',style: leftIconStyle}),
+    leftIconBody = <div style={leftIconBodyStyle}>{leftIcon}</div>
+
+    /**
+    * secondary line text
+    */
+    let secondaryText, expandedText, expandedAction, desktopClose, timestampEl
+    if (this.props.additionalText) {
+      secondaryText = <div style={secondaryTextStyle}>{this.props.additionalText}</div>
+    }
+    /**
     * if overflow text is present then show these expanded items
     */
-    let expandedText, expandedAction, desktopClose
     if (this.props.overflowText) {
       expandedText =
       <span>
@@ -254,6 +303,13 @@ class Notification extends Component {
       </IconButton>
     }
 
+    /**
+    * show the timestamp if the string is filled
+    */
+    if (this.props.timestamp) {
+      timestampEl = <div style={timestampStyle}>{this.props.timestamp}</div>
+    }
+
     return (
       <ReactCSSTransitionGroup
         transitionName={this.props.transitionName ? this.props.transitionName : ""}
@@ -267,16 +323,17 @@ class Notification extends Component {
           style={this.getStyle()}
           zDepth={this.props.zDepth}
         >
-          <List>
+          <List style={listStyle}>
             <ListItem
               primaryText={this.props.title}
-              secondaryText={this.props.additionalText}
+              secondaryText={secondaryText}
               secondaryTextLines={this.props.additionalLines}
-              leftIcon={this.props.icon}
+              leftIcon={leftIconBody}
               insetChildren={true}
               rightIconButton={desktopClose}
-              style={noTransition}
+              innerDivStyle={listItemStyle}
             />
+            {timestampEl}
           </List>
           {expandedText}
         </Paper>

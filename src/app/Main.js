@@ -34,10 +34,11 @@ class Main extends Component {
     tempNotifications.push(
       {
         title: 'Title',
-        additionalText: `Some message to be displayed ${tempNotifications.length}`,
+        additionalText: `Some message to be displayed ${tempNotifications.length}, we could be beautiful`,
         open: true,
-        icon: <CommunicationCall color={deepOrange500}/>,
-        overflowText: <div>joe</div>
+        icon: <CommunicationCall />,
+        overflowText: <div>joe</div>,
+        timestamp: moment().format('h:mm A')
       }
     )
     this.setState({
@@ -55,7 +56,7 @@ class Main extends Component {
             onTouchTap={this.handleTouchTap}
           />
           <ReactMaterialUiNotifications
-            desktop={true}
+            desktop={false}
             zDepth={2}
             children={this.state.Notifications}
           />
