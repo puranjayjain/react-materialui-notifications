@@ -1,7 +1,3 @@
-/**
-* In this file, we create a React component
-* which incorporates components providedby material-ui.
-*/
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -11,7 +7,9 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
+import FlatButton from 'material-ui/FlatButton'
 
+import Close from 'material-ui/svg-icons/navigation/close'
 import CommunicationCall from 'material-ui/svg-icons/communication/call'
 import Message from 'material-ui/svg-icons/communication/message'
 import Github from './Github'
@@ -26,9 +24,31 @@ const styles = {
     background: deepOrange500,
     textAlign: 'left'
   },
-  container: {
-    textAlign: 'center',
-    paddingBottom: 15
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  footer: {
+    marginTop: 15,
+    width: '100%',
+    fontSize: 16,
+    padding: '15px 0',
+    backgroundColor: '#fff'
+  },
+  logo: {
+    width: 48
+  },
+  paper: {
+    width: '100%',
+    textAlign: 'left',
+    marginBottom: 15,
+    padding: 15,
+    fontSize: 18
+  },
+  rightIcon: {
+    width: 36,
+    height: 36,
+    fill: '#fff'
   },
   table: {
     marginTop: 15
@@ -51,18 +71,6 @@ const styles = {
   },
   table2Col3: {
     width: 36
-  },
-  paper: {
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: 15,
-    padding: 15,
-    fontSize: 18
-  },
-  rightIcon: {
-    width: 36,
-    height: 36,
-    fill: '#fff'
   }
 },
 muiTheme = getMuiTheme({
@@ -85,8 +93,28 @@ export default class Main extends Component {
         additionalText: `Some message to be displayed ${this.state.count}`,
         icon: <Message />,
         iconBadgeColor: deepOrange500,
-        overflowText: <div>joe</div>,
+        overflowText: "joe@gmail.com",
         timestamp: moment().format('h:mm A')
+      }
+    )
+    this.setState({
+      Notifications: tempNotifications,
+      count: ++this.state.count
+    })
+  }
+
+  showPersonalisedNotification = () => {
+    let tempNotifications = this.state.Notifications
+    tempNotifications.push(
+      {
+        title: 'Title',
+        additionalText: `Some message to be displayed ${this.state.count}`,
+        icon: <Message />,
+        iconBadgeColor: deepOrange500,
+        overflowText: "me@gmail.com",
+        timestamp: moment().format('h:mm A'),
+        personalised: true,
+        avatar: "demo.png"
       }
     )
     this.setState({
@@ -103,8 +131,19 @@ export default class Main extends Component {
         additionalText: `Some message to be displayed ${this.state.count}`,
         icon: <CommunicationCall />,
         iconBadgeColor: deepOrange500,
-        overflowText: <div>joe</div>,
+        overflowContent: <div>
+          <FlatButton
+            label="dismiss"
+            icon={<Close />}
+          />
+          <FlatButton
+            label="answer"
+            icon={<CommunicationCall />}
+          />
+        </div>,
         timestamp: moment().format('h:mm A'),
+        personalised: true,
+        avatar: "demo.png",
         priority: true,
         zDepth: 4
       }
@@ -122,7 +161,12 @@ export default class Main extends Component {
           <AppBar
             title="React Material Ui Notifications"
             style={styles.appbar}
-            iconElementLeft={<span></span>}
+            iconElementLeft={
+              <img
+                style={styles.logo}
+                src="logo.png"
+              />
+            }
             iconElementRight={
               <a href="https://github.com/puranjayjain/react-materialui-notifications" target="_blank">
                 <IconButton iconStyle={styles.rightIcon}>
@@ -145,15 +189,21 @@ export default class Main extends Component {
               <code>npm i react-materialui-notifications</code>
             </p>
           </Paper>
-          <RaisedButton
-            label="Show Notification"
-            onTouchTap={this.showNotification}
-          />
-          <RaisedButton
-            label="Show Priority Notification"
-            secondary={true}
-            onTouchTap={this.showPriorityNotification}
-          />
+          <div style={styles.buttonContainer}>
+            <RaisedButton
+              label="Show Notification"
+              onTouchTap={this.showNotification}
+            />
+            <RaisedButton
+              label="Show Personalised Notification"
+              onTouchTap={this.showPersonalisedNotification}
+            />
+            <RaisedButton
+              label="Show Priority Notification"
+              secondary={true}
+              onTouchTap={this.showPriorityNotification}
+            />
+          </div>
           <div style={styles.table}>
             <Table
               style={styles.headerStyle}
@@ -221,6 +271,9 @@ export default class Main extends Component {
                 ))}
               </TableBody>
             </Table>
+            <footer style={styles.footer}>
+              Copyright &copy; 2016 Puranjay Jain and Contributors.
+            </footer>
           </div>
           <ReactMaterialUiNotifications
             desktop={true}

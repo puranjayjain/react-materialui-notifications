@@ -2,4 +2,4 @@
 
 var gulp = require('gulp');
 
-gulp.task('release', ['browserify', 'markup', 'minify', 'minifyApp']);
+gulp.task('release', ['browserify', 'copyImages', 'markup', 'minify', 'minifyApp']);

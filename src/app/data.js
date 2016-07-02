@@ -77,9 +77,9 @@ const NotificationData = [
   },
   {
     'prop': 'avatar',
-    'types': 'element',
+    'types': 'string',
     'default': '',
-    'description': 'Left avatar image to be displayed in a personalised notification'
+    'description': 'Left avatar image to be displayed in a personalised notification, pass the url of the image'
   },
   {
     'prop': 'icon',
@@ -101,7 +101,7 @@ const NotificationData = [
   },
   {
     'prop': 'overflowText',
-    'types': 'node',
+    'types': 'string',
     'default': '',
     'description': 'Text which is displayed below the additional text'
   },

@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper'
 import {List, ListItem} from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
+import Avatar from 'material-ui/Avatar'
 
 // icons
 import Close from 'material-ui/svg-icons/navigation/close'
@@ -63,7 +64,7 @@ export default class ReactMaterialUiNotifications extends Component {
   getStyle = () => {
     const style = {
       position: 'fixed',
-      minWidth: 250
+      minWidth: 325
     }
 
     return Object.assign(style, this.props.rootStyle)
@@ -88,7 +89,30 @@ export default class ReactMaterialUiNotifications extends Component {
         }
       }
     }
+    /**
+    * sort the priority notifications to the top
+    */
+    innerData.sort(function(a, b) {
+      var priorityA = a.priority
+      var priorityB = b.priority
+      if (!priorityA && priorityB) {
+        return 1
+      }
+      if (priorityA && !priorityB) {
+        return -1
+      }
+      // other cases they are considered same
+      return 0;
+    })
     return innerData
+  }
+
+  /**
+  * get the props we want to forward to the notification
+  */
+  getProps = (props) => {
+    let {children, rootStyle, maxNotifications, ...pProps} = this.props
+    return Object.assign(props, pProps)
   }
 
   render() {
@@ -104,15 +128,9 @@ export default class ReactMaterialUiNotifications extends Component {
         {innerData.map((props, index) => {
           return <Notification
             open={true}
-            desktop={this.props.desktop}
             index={index}
             key={index}
-            transitionName={this.props.transitionName}
-            transitionEnter={this.props.transitionEnter}
-            transitionLeave={this.props.transitionLeave}
-            transitionEnterTimeout={this.props.transitionEnterTimeout}
-            transitionLeaveTimeout={this.props.transitionLeaveTimeout}
-            {...props}
+            {...this.getProps(props)}
           />
         })}
       </div>
@@ -138,9 +156,9 @@ class Notification extends Component {
     */
     autoHide: PropTypes.number,
     /**
-    * left avatar image to be displayed in personalised notification
+    * pass left avatar image url to be displayed in a personalised notification
     */
-    avatar: PropTypes.element,
+    avatar: PropTypes.string,
     /**
     * key for the underlying transition
     */
@@ -164,7 +182,7 @@ class Notification extends Component {
     /**
     * additional overflow text
     */
-    overflowText: PropTypes.node,
+    overflowText: PropTypes.string,
     /**
     * additional overflow content, like buttons
     */
@@ -204,19 +222,28 @@ class Notification extends Component {
   }
 
   static contextTypes = {
-    muiTheme: PropTypes.object.isRequired,
+    muiTheme: PropTypes.object.isRequired
   }
 
   componentWillMount() {
     this.setState({
       open: this.props.open
     })
+    /**
+    * if autohide is set then use it
+    */
+    if (this.props.autoHide) {
+      this.autoHideTimeout = setTimeout(() => {
+        this.setState({open: false})
+      }, this.props.autoHide)
+    }
   }
 
   /**
-  * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
+  * cancel the settimeout function of the autohide method if the open is changed before timeout ends
   */
   componentWillUnmount() {
+    clearTimeout(this.autoHideTimeout)
   }
 
   /**
@@ -227,7 +254,6 @@ class Notification extends Component {
       display: this.state.open ? 'block' : 'none',
       textAlign: 'left',
       borderRadius: 3,
-      transition: 'none',
       margin: '12px auto'
     }
 
@@ -236,18 +262,118 @@ class Notification extends Component {
 
   /**
   * hide notification on click of the close button
-  * TODO cancel the settimeout function of the autohide method if the open is changed before timeout ends
+  * cancel the settimeout function of the autohide method if the open is changed before timeout ends
   */
-  onCloseNotification = () => this.setState({open: false})
+  onCloseNotification = () => {
+    clearTimeout(this.autoHideTimeout)
+    this.setState({open: false})
+  }
+
+  /**
+  * generate the correct icon body on the left to display in the notification
+  */
+  getNotificationIcon = () => {
+    /**
+    * if personalised then render an avatar with the icon
+    */
+    let iconEl
+    if (this.props.personalised) {
+      let leftIconBodyStyle = {
+        top: 4,
+        margin: 0,
+        left: 8,
+        width: 'auto',
+        height: 'auto'
+      },
+      leftAvatarStyle = {
+        textAlign: 'center'
+      },
+      leftIconStyle = {
+        position: 'absolute',
+        padding: 4,
+        right: -6,
+        bottom: -4,
+        borderRadius: '50%',
+        backgroundColor: this.props.iconBadgeColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex'
+      },
+      leftIcon = cloneElement(this.props.icon, {
+        color: this.props.iconFillColor,
+        style: {
+          width: 12,
+          height: 12
+        }
+      })
+      iconEl =
+      <div style={leftIconBodyStyle}>
+        <Avatar
+          src={this.props.avatar}
+          size={44}
+          style={leftAvatarStyle}
+        />
+        <div style={leftIconStyle}>
+          {leftIcon}
+        </div>
+      </div>
+    }
+    else {
+      let leftIconBodyStyle = {
+        height: 32,
+        width: 32,
+        top: 4,
+        padding: 6,
+        margin: 0,
+        left: 8,
+        borderRadius: '50%',
+        backgroundColor: this.props.iconBadgeColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex'
+      },
+      leftIcon = cloneElement(this.props.icon, {
+        color: this.props.iconFillColor,
+        style: {
+          margin: 0
+        }
+      })
+      iconEl =
+      <div style={leftIconBodyStyle}>
+        {leftIcon}
+      </div>
+    }
+    return iconEl
+  }
 
   render() {
-    const listStyle = {
-      position: 'relative'
+    const iconButtonStyle = {
+      width: 36,
+      height: 36,
+      top: -3,
+      right: 4,
+      padding: 6
+    },
+
+    iconStyle = {
+      height: 18,
+      width: 18
     },
 
     listItemStyle = {
-      transition: 'none',
       padding: '8px 8px 0 72px'
+    },
+
+    listStyle = {
+      position: 'relative'
+    },
+
+    overflowStyle = {
+      padding: '12px 0 12px 72px'
+    },
+
+    overflowContentStyle = {
+      paddingLeft: 72
     },
 
     secondaryTextStyle = {
@@ -255,57 +381,12 @@ class Notification extends Component {
       marginBottom: 8
     },
 
-    iconButtonStyle = {
-      width: 36,
-      height: 36,
-      top: -3,
-      right: 4,
-      padding: 6,
-      transition: 'none'
-    },
-
-    leftIconBodyStyle = {
-      height: 32,
-      width: 32,
-      top: 4,
-      padding: 6,
-      margin: 0,
-      left: 8,
-      borderRadius: '50%',
-      backgroundColor: this.props.iconBadgeColor,
-      justifyContent: 'center',
-      alignItems: 'center',
-      display: 'flex'
-    },
-
-    leftIconStyle = {
-      margin: 0
-    },
-
-    iconStyle = {
-      height: 18,
-      width: 18,
-      transition: 'none'
-    },
-
     timestampStyle = {
       position: 'absolute',
       right: this.props.desktop ? 42 : 8,
-      top: 12
-    },
-
-    overflowStyle = {
-      padding: '12px 0 12px 72px'
+      fontSize: 12,
+      top: 14
     }
-
-    /**
-    * modify icon prop
-    */
-    let leftIcon = cloneElement(this.props.icon, {
-      color: this.props.iconFillColor,
-      style: leftIconStyle
-    }),
-    leftIconBody = <div style={leftIconBodyStyle}>{leftIcon}</div>
 
     /**
     * secondary line text
@@ -337,7 +418,7 @@ class Notification extends Component {
       expandedAction =
       <span>
         <Divider inset={true}/>
-        <div style={overflowStyle}>
+        <div style={overflowContentStyle}>
           {this.props.overflowContent}
         </div>
       </span>
@@ -379,19 +460,21 @@ class Notification extends Component {
           key={this.props.index}
           style={this.getStyle()}
           zDepth={this.props.zDepth}
+          transitionEnabled={false}
         >
           <List style={listStyle}>
             <ListItem
               primaryText={this.props.title}
               secondaryText={secondaryText}
               secondaryTextLines={this.props.additionalLines}
-              leftIcon={leftIconBody}
+              leftIcon={this.getNotificationIcon()}
               insetChildren={true}
               rightIconButton={desktopClose}
               innerDivStyle={listItemStyle}
             />
             {timestampEl}
           </List>
+          {expandedAction}
           {expandedText}
         </Paper>
       </ReactCSSTransitionGroup>

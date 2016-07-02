@@ -1,2 +1,2 @@
-set  NODE_ENV=development
+set NODE_ENV=development
 gulp default
