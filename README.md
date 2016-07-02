@@ -1,5 +1,18 @@
 # react-materialui-notifications
-Spec compliant notifications for react and material ui users
+
+[![GitHub version](https://img.shields.io/github/release/puranjayjain/react-materialui-notifications.svg)](https://badge.fury.io/gh/puranjayjain%2Freact-materialui-notifications)
+[![npm version](https://badge.fury.io/js/react-materialui-notifications.svg)](https://badge.fury.io/js/react-materialui-notifications)
+
+[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
+
+[![Issues](https://img.shields.io/github/issues/puranjayjain/react-materialui-notifications.svg)](https://github.com/puranjayjain/react-materialui-notifications/issues)
+[![Forks](https://img.shields.io/github/forks/puranjayjain/react-materialui-notifications.svg)](https://github.com/puranjayjain/react-materialui-notifications/network)
+[![Stars](https://img.shields.io/github/stars/puranjayjain/react-materialui-notifications.svg)](https://github.com/puranjayjain/react-materialui-notifications/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/puranjayjain/react-materialui-notifications/master/LICENSE.md)
+
+:heart: the package? Then :star: it!
+
+> Spec compliant notifications for react and material ui users
 
 # Installation
 
