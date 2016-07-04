@@ -1,6 +1,6 @@
 {
   "name": "react-materialui-notifications",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Spec compliant notifications for react and material ui users",
   "keywords": [
     "react",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/puranjayjain/react-materialui-notifications.git"
   },
-  "main": "build/ReactMaterialUiNotifications.js",
+  "main": "./lib/ReactMaterialUiNotifications.js",
   "scripts": {
     "start": "gulp"
   },
@@ -28,6 +28,7 @@
     "browser-sync": "^2.13.0",
     "browserify": "^13.0.1",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-notify": "^2.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.4",
@@ -37,6 +38,7 @@
     "pump": "^1.0.1",
     "recompose": "^0.20.2",
     "require-dir": "^0.3.0",
+    "run-sequence": "^1.2.2",
     "underscore": "^1.8.3",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"

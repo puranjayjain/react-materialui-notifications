@@ -26,11 +26,6 @@ module.exports = {
       entries: src + '/app/app.js',
       dest: dest,
       outputName: 'app.js'
-    },
-    {
-      entries: src + '/app/ReactMaterialUiNotifications.js',
-      dest: dest,
-      outputName: 'ReactMaterialUiNotifications.js'
     }
   ],
     extensions: ['.js'],
