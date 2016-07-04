@@ -30,9 +30,9 @@ const styles = {
   },
   footer: {
     marginTop: 15,
-    width: '100%',
+    width: 'calc(100% - 30px)',
     fontSize: 16,
-    padding: '15px 0',
+    padding: 15,
     backgroundColor: '#fff'
   },
   logo: {
