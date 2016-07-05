@@ -274,74 +274,79 @@ class Notification extends Component {
   */
   getNotificationIcon = () => {
     /**
-    * if personalised then render an avatar with the icon
+    * only show notification icon if it is passes
     */
     let iconEl
-    if (this.props.personalised) {
-      let leftIconBodyStyle = {
-        top: 4,
-        margin: 0,
-        left: 8,
-        width: 'auto',
-        height: 'auto'
-      },
-      leftAvatarStyle = {
-        textAlign: 'center'
-      },
-      leftIconStyle = {
-        position: 'absolute',
-        padding: 4,
-        right: -6,
-        bottom: -4,
-        borderRadius: '50%',
-        backgroundColor: this.props.iconBadgeColor,
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex'
-      },
-      leftIcon = cloneElement(this.props.icon, {
-        color: this.props.iconFillColor,
-        style: {
-          width: 12,
-          height: 12
-        }
-      })
-      iconEl =
-      <div style={leftIconBodyStyle}>
-        <Avatar
-          src={this.props.avatar}
-          size={44}
-          style={leftAvatarStyle}
-        />
-        <div style={leftIconStyle}>
+    if (this.props.icon) {
+      /**
+      * if personalised then render an avatar with the icon
+      */
+      if (this.props.personalised) {
+        let leftIconBodyStyle = {
+          top: 4,
+          margin: 0,
+          left: 8,
+          width: 'auto',
+          height: 'auto'
+        },
+        leftAvatarStyle = {
+          textAlign: 'center'
+        },
+        leftIconStyle = {
+          position: 'absolute',
+          padding: 4,
+          right: -6,
+          bottom: -4,
+          borderRadius: '50%',
+          backgroundColor: this.props.iconBadgeColor,
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex'
+        },
+        leftIcon = cloneElement(this.props.icon, {
+          color: this.props.iconFillColor,
+          style: {
+            width: 12,
+            height: 12
+          }
+        })
+        iconEl =
+        <div style={leftIconBodyStyle}>
+          <Avatar
+            src={this.props.avatar}
+            size={44}
+            style={leftAvatarStyle}
+          />
+          <div style={leftIconStyle}>
+            {leftIcon}
+          </div>
+        </div>
+      }
+      else {
+        let leftIconBodyStyle = {
+          height: 32,
+          width: 32,
+          top: 4,
+          padding: 6,
+          margin: 0,
+          left: 8,
+          borderRadius: '50%',
+          backgroundColor: this.props.iconBadgeColor,
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex'
+        },
+        leftIcon = cloneElement(this.props.icon, {
+          color: this.props.iconFillColor,
+          style: {
+            margin: 0
+          }
+        })
+        iconEl =
+        <div style={leftIconBodyStyle}>
           {leftIcon}
         </div>
-      </div>
-    }
-    else {
-      let leftIconBodyStyle = {
-        height: 32,
-        width: 32,
-        top: 4,
-        padding: 6,
-        margin: 0,
-        left: 8,
-        borderRadius: '50%',
-        backgroundColor: this.props.iconBadgeColor,
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex'
-      },
-      leftIcon = cloneElement(this.props.icon, {
-        color: this.props.iconFillColor,
-        style: {
-          margin: 0
-        }
-      })
-      iconEl =
-      <div style={leftIconBodyStyle}>
-        {leftIcon}
-      </div>
+      }
     }
     return iconEl
   }
@@ -361,7 +366,7 @@ class Notification extends Component {
     },
 
     listItemStyle = {
-      padding: '8px 8px 0 72px'
+      padding: this.props.icon ? '8px 8px 0 72px' : '8px 8px 0 12px'
     },
 
     listStyle = {

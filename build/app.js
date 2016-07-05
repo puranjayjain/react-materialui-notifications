@@ -41711,77 +41711,82 @@ var Notification = function (_Component2) {
       _this3.setState({ open: false });
     }, _this3.getNotificationIcon = function () {
       /**
-      * if personalised then render an avatar with the icon
+      * only show notification icon if it is passes
       */
       var iconEl = void 0;
-      if (_this3.props.personalised) {
-        var leftIconBodyStyle = {
-          top: 4,
-          margin: 0,
-          left: 8,
-          width: 'auto',
-          height: 'auto'
-        },
-            leftAvatarStyle = {
-          textAlign: 'center'
-        },
-            leftIconStyle = {
-          position: 'absolute',
-          padding: 4,
-          right: -6,
-          bottom: -4,
-          borderRadius: '50%',
-          backgroundColor: _this3.props.iconBadgeColor,
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: 'flex'
-        },
-            leftIcon = (0, _react.cloneElement)(_this3.props.icon, {
-          color: _this3.props.iconFillColor,
-          style: {
-            width: 12,
-            height: 12
-          }
-        });
-        iconEl = _react2.default.createElement(
-          'div',
-          { style: leftIconBodyStyle },
-          _react2.default.createElement(_Avatar2.default, {
-            src: _this3.props.avatar,
-            size: 44,
-            style: leftAvatarStyle
-          }),
-          _react2.default.createElement(
+      if (_this3.props.icon) {
+        /**
+        * if personalised then render an avatar with the icon
+        */
+        if (_this3.props.personalised) {
+          var leftIconBodyStyle = {
+            top: 4,
+            margin: 0,
+            left: 8,
+            width: 'auto',
+            height: 'auto'
+          },
+              leftAvatarStyle = {
+            textAlign: 'center'
+          },
+              leftIconStyle = {
+            position: 'absolute',
+            padding: 4,
+            right: -6,
+            bottom: -4,
+            borderRadius: '50%',
+            backgroundColor: _this3.props.iconBadgeColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex'
+          },
+              leftIcon = (0, _react.cloneElement)(_this3.props.icon, {
+            color: _this3.props.iconFillColor,
+            style: {
+              width: 12,
+              height: 12
+            }
+          });
+          iconEl = _react2.default.createElement(
             'div',
-            { style: leftIconStyle },
-            leftIcon
-          )
-        );
-      } else {
-        var _leftIconBodyStyle = {
-          height: 32,
-          width: 32,
-          top: 4,
-          padding: 6,
-          margin: 0,
-          left: 8,
-          borderRadius: '50%',
-          backgroundColor: _this3.props.iconBadgeColor,
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: 'flex'
-        },
-            _leftIcon = (0, _react.cloneElement)(_this3.props.icon, {
-          color: _this3.props.iconFillColor,
-          style: {
-            margin: 0
-          }
-        });
-        iconEl = _react2.default.createElement(
-          'div',
-          { style: _leftIconBodyStyle },
-          _leftIcon
-        );
+            { style: leftIconBodyStyle },
+            _react2.default.createElement(_Avatar2.default, {
+              src: _this3.props.avatar,
+              size: 44,
+              style: leftAvatarStyle
+            }),
+            _react2.default.createElement(
+              'div',
+              { style: leftIconStyle },
+              leftIcon
+            )
+          );
+        } else {
+          var _leftIconBodyStyle = {
+            height: 32,
+            width: 32,
+            top: 4,
+            padding: 6,
+            margin: 0,
+            left: 8,
+            borderRadius: '50%',
+            backgroundColor: _this3.props.iconBadgeColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex'
+          },
+              _leftIcon = (0, _react.cloneElement)(_this3.props.icon, {
+            color: _this3.props.iconFillColor,
+            style: {
+              margin: 0
+            }
+          });
+          iconEl = _react2.default.createElement(
+            'div',
+            { style: _leftIconBodyStyle },
+            _leftIcon
+          );
+        }
       }
       return iconEl;
     }, _temp2), _possibleConstructorReturn(_this3, _ret2);
@@ -41854,7 +41859,7 @@ var Notification = function (_Component2) {
         width: 18
       },
           listItemStyle = {
-        padding: '8px 8px 0 72px'
+        padding: this.props.icon ? '8px 8px 0 72px' : '8px 8px 0 12px'
       },
           listStyle = {
         position: 'relative'
