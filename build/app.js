@@ -41657,7 +41657,7 @@ ReactMaterialUiNotifications.propTypes = {
   /**
   * maximum number of notifications to display
   */
-  maxNotifications: _react.PropTypes.number,
+  maxNotifications: _react2.default.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
   /**
   * root component's style
   */
@@ -41672,7 +41672,7 @@ ReactMaterialUiNotifications.propTypes = {
   transitionLeaveTimeout: _react.PropTypes.number
 };
 ReactMaterialUiNotifications.defaultProps = {
-  maxNotifications: 3,
+  maxNotifications: Infinity,
   rootStyle: {
     bottom: 20,
     right: 25
@@ -42123,8 +42123,8 @@ var ComponentData = [{
   description: 'Desktop device or touch device, in Desktop mode you have close button on the right'
 }, {
   prop: 'maxNotifications',
-  types: 'number',
-  default: 3,
+  types: 'number, string',
+  default: 'Infinity',
   description: 'Maximum number of notifications to display'
 }, {
   prop: 'rootStyle',

@@ -14,8 +14,8 @@ const ComponentData = [
   },
   {
     prop: 'maxNotifications',
-    types: 'number',
-    default: 3,
+    types: 'number, string',
+    default: 'Infinity',
     description: 'Maximum number of notifications to display'
   },
   {

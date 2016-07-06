@@ -30,7 +30,10 @@ export default class ReactMaterialUiNotifications extends Component {
     /**
     * maximum number of notifications to display
     */
-    maxNotifications: PropTypes.number,
+    maxNotifications: React.PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     /**
     * root component's style
     */
@@ -49,7 +52,7 @@ export default class ReactMaterialUiNotifications extends Component {
   * default props
   */
   static defaultProps = {
-    maxNotifications: 3,
+    maxNotifications: Infinity,
     rootStyle: {
       bottom: 20,
       right: 25

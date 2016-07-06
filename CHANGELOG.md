@@ -15,3 +15,6 @@
 ## v0.3.1
 * Fixed left icon prop being passed empty resulted in an error
 * Fixed left icon padding
+
+## v0.3.2
+* Changed max notification count to infinity and allowed values are natural numbers or Infinity
