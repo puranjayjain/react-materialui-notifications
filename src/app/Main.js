@@ -188,6 +188,12 @@ export default class Main extends Component {
             <p>
               <code>npm i react-materialui-notifications</code>
             </p>
+            <p>
+              <strong>Install from bower</strong>
+            </p>
+            <p>
+              <code>bower install react-materialui-notifications</code>
+            </p>
           </Paper>
           <div style={styles.buttonContainer}>
             <RaisedButton

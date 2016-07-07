@@ -41268,6 +41268,24 @@ var Main = function (_Component) {
                 null,
                 'npm i react-materialui-notifications'
               )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Install from bower'
+              )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement(
+                'code',
+                null,
+                'bower install react-materialui-notifications'
+              )
             )
           ),
           _react2.default.createElement(
