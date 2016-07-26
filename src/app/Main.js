@@ -283,6 +283,14 @@ export default class Main extends Component {
           </div>
           <ReactMaterialUiNotifications
             desktop={true}
+            transitionName={{
+              leave: 'dummy',
+              leaveActive: 'fadeOut',
+              appear: 'dummy',
+              appearActive: 'zoomInUp'
+            }}
+            transitionAppear={true}
+            transitionLeave={true}
             children={this.state.Notifications}
           />
         </div>

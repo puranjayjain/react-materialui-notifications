@@ -25,34 +25,10 @@ const ComponentData = [
     description: 'Container of all notifications, component\'s style'
   },
   {
-    prop: 'transitionName',
-    types: 'string',
-    default: '',
-    description: 'React css addons property'
-  },
-  {
-    prop: 'transitionEnter',
-    types: 'bool',
-    default: '',
-    description: 'React css addons property'
-  },
-  {
-    prop: 'transitionLeave',
-    types: 'bool',
-    default: '',
-    description: 'React css addons property'
-  },
-  {
-    prop: 'transitionEnterTimeout',
-    types: 'number',
-    default: '',
-    description: 'React css addons property'
-  },
-  {
-    prop: 'transitionLeaveTimeout',
-    types: 'number',
-    default: '',
-    description: 'React css addons property'
+    prop: 'All react css transition props',
+    types: 'see react css addon\'s docs',
+    default: '..\src\app\ReactMaterialUiNotifications.js#L448',
+    description: 'https://facebook.github.io/react/docs/animation.html'
   }
 ]
 

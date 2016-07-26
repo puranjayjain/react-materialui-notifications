@@ -18,3 +18,9 @@
 
 ## v0.3.2
 * Changed max notification count to infinity and allowed values are natural numbers or Infinity
+
+## v0.4.0
+* changed the way props are handled internally for react css transition group
+* added a demo for react css transition group
+* added license to package json
+* added transitionAppear and other related props

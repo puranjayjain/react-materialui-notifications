@@ -1,6 +1,6 @@
 {
   "name": "react-materialui-notifications",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Spec compliant notifications for react and material ui users",
   "keywords": [
     "react",
@@ -17,6 +17,7 @@
   "scripts": {
     "start": "gulp"
   },
+  "license" : "MIT ",
   "devDependencies": {
     "babel-core": "^6.11.4",
     "babel-plugin-transform-class-properties": "^6.11.5",

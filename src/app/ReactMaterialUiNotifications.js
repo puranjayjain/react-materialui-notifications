@@ -37,15 +37,7 @@ export default class ReactMaterialUiNotifications extends Component {
     /**
     * root component's style
     */
-    rootStyle: PropTypes.object,
-    /**
-    * all exposed props of react css transition properties
-    */
-    transitionName: PropTypes.string,
-    transitionEnter: PropTypes.bool,
-    transitionLeave: PropTypes.bool,
-    transitionEnterTimeout: PropTypes.number,
-    transitionLeaveTimeout: PropTypes.number
+    rootStyle: PropTypes.object
   }
 
   /**
@@ -131,7 +123,6 @@ export default class ReactMaterialUiNotifications extends Component {
         {innerData.map((props, index) => {
           return <Notification
             open={true}
-            index={index}
             key={index}
             {...this.getProps(props)}
           />
@@ -162,10 +153,6 @@ class Notification extends Component {
     * pass left avatar image url to be displayed in a personalised notification
     */
     avatar: PropTypes.string,
-    /**
-    * key for the underlying transition
-    */
-    index: PropTypes.number,
     /**
     * notification icon on the left
     */
@@ -459,13 +446,15 @@ class Notification extends Component {
     return (
       <ReactCSSTransitionGroup
         transitionName={this.props.transitionName ? this.props.transitionName : ""}
+        transitionAppear={this.props.transitionAppear ? this.props.transitionAppear : false}
         transitionEnter={this.props.transitionEnter ? this.props.transitionEnter : false}
         transitionLeave={this.props.transitionLeave ? this.props.transitionLeave : false}
+        transitionAppearTimeout={this.props.transitionAppearTimeout ? this.props.transitionAppearTimeout : 0}
         transitionEnterTimeout={this.props.transitionEnterTimeout ? this.props.transitionEnterTimeout : 0}
         transitionLeaveTimeout={this.props.transitionLeaveTimeout ? this.props.transitionLeaveTimeout : 0}
       >
         <Paper
-          key={this.props.index}
+          key={this.state.open}
           style={this.getStyle()}
           zDepth={this.props.zDepth}
           transitionEnabled={false}
