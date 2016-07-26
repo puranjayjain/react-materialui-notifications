@@ -81,76 +81,66 @@ muiTheme = getMuiTheme({
 
 export default class Main extends Component {
   state = {
-    Notifications: [],
     count: 0
   }
 
   showNotification = () => {
-    let tempNotifications = this.state.Notifications
-    tempNotifications.push(
-      {
-        title: 'Title',
-        additionalText: `Some message to be displayed ${this.state.count}`,
-        icon: <Message />,
-        iconBadgeColor: deepOrange500,
-        overflowText: "joe@gmail.com",
-        timestamp: moment().format('h:mm A')
-      }
-    )
+    ReactMaterialUiNotifications.showNotification({
+      title: 'Title',
+      additionalText: `Some message to be displayed ${this.state.count}`,
+      icon: <Message />,
+      iconBadgeColor: deepOrange500,
+      overflowText: "joe@gmail.com",
+      timestamp: moment().format('h:mm A')
+    })
+    // update notifications count
     this.setState({
-      Notifications: tempNotifications,
       count: ++this.state.count
     })
   }
 
   showPersonalisedNotification = () => {
-    let tempNotifications = this.state.Notifications
-    tempNotifications.push(
-      {
-        title: 'Title',
-        additionalText: `Some message to be displayed ${this.state.count}`,
-        icon: <Message />,
-        iconBadgeColor: deepOrange500,
-        overflowText: "me@gmail.com",
-        timestamp: moment().format('h:mm A'),
-        personalised: true,
-        avatar: "demo.png"
-      }
-    )
+    // update notifications count
     this.setState({
-      Notifications: tempNotifications,
       count: ++this.state.count
+    })
+    ReactMaterialUiNotifications.showNotification({
+      title: 'Title',
+      additionalText: `Some message to be displayed ${this.state.count}`,
+      icon: <Message />,
+      iconBadgeColor: deepOrange500,
+      overflowText: "me@gmail.com",
+      timestamp: moment().format('h:mm A'),
+      personalised: true,
+      avatar: "demo.png"
     })
   }
 
   showPriorityNotification = () => {
-    let tempNotifications = this.state.Notifications
-    tempNotifications.push(
-      {
-        title: 'Title',
-        additionalText: `Some message to be displayed ${this.state.count}`,
-        icon: <CommunicationCall />,
-        iconBadgeColor: deepOrange500,
-        overflowContent: <div>
-          <FlatButton
-            label="dismiss"
-            icon={<Close />}
-          />
-          <FlatButton
-            label="answer"
-            icon={<CommunicationCall />}
-          />
-        </div>,
-        timestamp: moment().format('h:mm A'),
-        personalised: true,
-        avatar: "demo.png",
-        priority: true,
-        zDepth: 4
-      }
-    )
+    // update notifications count
     this.setState({
-      Notifications: tempNotifications,
       count: ++this.state.count
+    })
+    ReactMaterialUiNotifications.showNotification({
+      title: 'Title',
+      additionalText: `Some message to be displayed ${this.state.count}`,
+      icon: <CommunicationCall />,
+      iconBadgeColor: deepOrange500,
+      overflowContent: <div>
+        <FlatButton
+          label="dismiss"
+          icon={<Close />}
+        />
+        <FlatButton
+          label="answer"
+          icon={<CommunicationCall />}
+        />
+      </div>,
+      timestamp: moment().format('h:mm A'),
+      personalised: true,
+      avatar: "demo.png",
+      priority: true,
+      zDepth: 4
     })
   }
 
@@ -194,6 +184,14 @@ export default class Main extends Component {
             <p>
               <code>bower install react-materialui-notifications</code>
             </p>
+            <p>
+              <strong>Usage example</strong>
+            </p>
+            <FlatButton
+              label="Examples file"
+              primary={true}
+              onTouchTap={() => {location.href = 'https://github.com/puranjayjain/react-materialui-notifications/blob/master/src/app/Main.js'}}
+            />
           </Paper>
           <div style={styles.buttonContainer}>
             <RaisedButton
@@ -291,7 +289,6 @@ export default class Main extends Component {
             }}
             transitionAppear={true}
             transitionLeave={true}
-            children={this.state.Notifications}
           />
         </div>
       </MuiThemeProvider>

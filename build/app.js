@@ -41079,11 +41079,9 @@ var Main = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Main)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      Notifications: [],
       count: 0
     }, _this.showNotification = function () {
-      var tempNotifications = _this.state.Notifications;
-      tempNotifications.push({
+      _ReactMaterialUiNotifications2.default.showNotification({
         title: 'Title',
         additionalText: 'Some message to be displayed ' + _this.state.count,
         icon: _react2.default.createElement(_message2.default, null),
@@ -41091,13 +41089,16 @@ var Main = function (_Component) {
         overflowText: "joe@gmail.com",
         timestamp: (0, _moment2.default)().format('h:mm A')
       });
+      // update notifications count
       _this.setState({
-        Notifications: tempNotifications,
         count: ++_this.state.count
       });
     }, _this.showPersonalisedNotification = function () {
-      var tempNotifications = _this.state.Notifications;
-      tempNotifications.push({
+      // update notifications count
+      _this.setState({
+        count: ++_this.state.count
+      });
+      _ReactMaterialUiNotifications2.default.showNotification({
         title: 'Title',
         additionalText: 'Some message to be displayed ' + _this.state.count,
         icon: _react2.default.createElement(_message2.default, null),
@@ -41107,13 +41108,12 @@ var Main = function (_Component) {
         personalised: true,
         avatar: "demo.png"
       });
+    }, _this.showPriorityNotification = function () {
+      // update notifications count
       _this.setState({
-        Notifications: tempNotifications,
         count: ++_this.state.count
       });
-    }, _this.showPriorityNotification = function () {
-      var tempNotifications = _this.state.Notifications;
-      tempNotifications.push({
+      _ReactMaterialUiNotifications2.default.showNotification({
         title: 'Title',
         additionalText: 'Some message to be displayed ' + _this.state.count,
         icon: _react2.default.createElement(_call2.default, null),
@@ -41135,10 +41135,6 @@ var Main = function (_Component) {
         avatar: "demo.png",
         priority: true,
         zDepth: 4
-      });
-      _this.setState({
-        Notifications: tempNotifications,
-        count: ++_this.state.count
       });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -41215,7 +41211,23 @@ var Main = function (_Component) {
                 null,
                 'bower install react-materialui-notifications'
               )
-            )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Usage example'
+              )
+            ),
+            _react2.default.createElement(_FlatButton2.default, {
+              label: 'Examples file',
+              primary: true,
+              onTouchTap: function onTouchTap() {
+                location.href = 'https://github.com/puranjayjain/react-materialui-notifications/blob/master/src/app/Main.js';
+              }
+            })
           ),
           _react2.default.createElement(
             'div',
@@ -41412,8 +41424,7 @@ var Main = function (_Component) {
               appearActive: 'zoomInUp'
             },
             transitionAppear: true,
-            transitionLeave: true,
-            children: this.state.Notifications
+            transitionLeave: true
           })
         )
       );
@@ -41432,9 +41443,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -41488,6 +41499,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // icons
 
 
+// this will store the notifications and their count to track them and also maxNotifications for use in internal functions
+var notifications = [],
+    count = 0,
+    maxNotifications = void 0;
+
 var ReactMaterialUiNotifications = function (_Component) {
   _inherits(ReactMaterialUiNotifications, _Component);
 
@@ -41509,38 +41525,6 @@ var ReactMaterialUiNotifications = function (_Component) {
       };
 
       return Object.assign(style, _this.props.rootStyle);
-    }, _this.getInnerData = function () {
-      var innerData = _this.props.children.constructor === Array ? _this.props.children : [_this.props.children];
-      /**
-      * remove the excess notifications,
-      * TODO safely remove them with animation, by passing open as false and doing newprops forcefully change the old one with willreceivenewprops function
-      */
-      if (innerData.length > _this.props.maxNotifications) {
-        for (var i in innerData) {
-          if (_typeof(innerData[i]) === 'object' && (!innerData[i].hasOwnProperty('priority') || !innerData[i].priority)) {
-            innerData.splice(i, 1);
-            if (innerData.length === _this.props.maxNotifications) {
-              break;
-            }
-          }
-        }
-      }
-      /**
-      * sort the priority notifications to the top
-      */
-      innerData.sort(function (a, b) {
-        var priorityA = a.priority;
-        var priorityB = b.priority;
-        if (!priorityA && priorityB) {
-          return 1;
-        }
-        if (priorityA && !priorityB) {
-          return -1;
-        }
-        // other cases they are considered same
-        return 0;
-      });
-      return innerData;
     }, _this.getProps = function (props) {
       var _this$props = _this.props;
       var children = _this$props.children;
@@ -41558,38 +41542,53 @@ var ReactMaterialUiNotifications = function (_Component) {
   */
 
 
-  // merge local styles and overriding styles and return it
-
-
-  /**
-  * perform operations like capping on the operations before doing them
-  */
-
-
-  /**
-  * get the props we want to forward to the notification
-  */
-
-
   _createClass(ReactMaterialUiNotifications, [{
+    key: 'componentWillMount',
+
+
+    /**
+     * copy some values to global for use in internal functions
+     */
+    value: function componentWillMount() {
+      maxNotifications = this.props.maxNotifications;
+    }
+
+    // add notification method
+
+
+    /**
+    * filter out and only keep the open notifications
+    * @method
+    * @param  {object} notification [a notification object]
+    */
+
+
+    /**
+    * perform operations like capping on the operations before doing them
+    */
+
+
+    // merge local styles and overriding styles and return it
+
+
+    /**
+    * get the props we want to forward to the notification
+    */
+
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
-
-      /**
-      * convert object to array
-      */
-      var innerData = this.getInnerData();
 
       return _react2.default.createElement(
         'div',
         {
           style: this.getStyle()
         },
-        innerData.map(function (props, index) {
+        notifications.map(function (props, index) {
           return _react2.default.createElement(Notification, _extends({
             open: true,
-            key: index
+            key: props.count
           }, _this2.getProps(props)));
         })
       );
@@ -41600,10 +41599,6 @@ var ReactMaterialUiNotifications = function (_Component) {
 }(_react.Component);
 
 ReactMaterialUiNotifications.propTypes = {
-  /**
-  * children with state of the component and other information
-  */
-  children: _react2.default.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
   /**
   * Desktop device or touch device
   */
@@ -41627,6 +41622,54 @@ ReactMaterialUiNotifications.defaultProps = {
 ReactMaterialUiNotifications.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
+
+ReactMaterialUiNotifications.showNotification = function (notification) {
+  var tempNotifications = notifications;
+  // push a new notification to notifications
+  notification.open = true;
+  notification.count = count;
+  tempNotifications.push(notification);
+  // filter and keep only the open ones
+  tempNotifications = tempNotifications.filter(ReactMaterialUiNotifications.filterOpen);
+  // shuffle notifications and set actual notifications to the temp ones to update render
+  notifications = ReactMaterialUiNotifications.shuffleNotifications(tempNotifications);
+  // update counter
+  count++;
+};
+
+ReactMaterialUiNotifications.filterOpen = function (notification) {
+  return notification.open;
+};
+
+ReactMaterialUiNotifications.shuffleNotifications = function (tempNotifications) {
+  if (tempNotifications.length > maxNotifications) {
+    for (var i in tempNotifications) {
+      if (_typeof(tempNotifications[i]) === 'object' && (!tempNotifications[i].hasOwnProperty('priority') || !tempNotifications[i].priority)) {
+        tempNotifications.splice(i, 1);
+        if (tempNotifications.length === maxNotifications) {
+          break;
+        }
+      }
+    }
+  }
+  /**
+  * sort the priority notifications to the top
+  */
+  tempNotifications.sort(function (a, b) {
+    var priorityA = a.priority;
+    var priorityB = b.priority;
+    if (!priorityA && priorityB) {
+      return 1;
+    }
+    if (priorityA && !priorityB) {
+      return -1;
+    }
+    // other cases they are considered same
+    return 0;
+  });
+  return tempNotifications;
+};
+
 exports.default = ReactMaterialUiNotifications;
 
 var Notification = function (_Component2) {
@@ -41986,6 +42029,7 @@ Notification.propTypes = {
   overflowText: _react.PropTypes.string,
   /**
   * additional overflow content, like buttons
+  * TODO implement the on click dismiss action like done in card (material-ui) as actAsExpander
   */
   overflowContent: _react.PropTypes.element,
   /**
@@ -42056,11 +42100,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 // table data for all the options
 var ComponentData = [{
-  prop: 'children',
-  types: 'array, object',
-  default: '',
-  description: 'Notification children, here each oject contains the Notification in an Array'
-}, {
   prop: 'desktop',
   types: 'bool',
   default: 'false',

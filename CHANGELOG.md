@@ -24,3 +24,8 @@
 * added a demo for react css transition group
 * added license to package json
 * added transitionAppear and other related props
+
+> **Note** Major breaking changes!
+
+* removed children prop in favor of static showNotification method
+* you can now only use one ReactMaterialUiNotifications component per app, so try to put it in a common spot, this was done to solve the problem of incorrect notifications getting displayed and to introduce the dismiss action in a future release

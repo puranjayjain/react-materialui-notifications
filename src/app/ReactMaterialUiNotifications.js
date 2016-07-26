@@ -14,15 +14,13 @@ import Avatar from 'material-ui/Avatar'
 // icons
 import Close from 'material-ui/svg-icons/navigation/close'
 
+// this will store the notifications and their count to track them and also maxNotifications for use in internal functions
+let notifications = [],
+count = 0,
+maxNotifications
+
 export default class ReactMaterialUiNotifications extends Component {
   static propTypes = {
-    /**
-    * children with state of the component and other information
-    */
-    children: React.PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]),
     /**
     * Desktop device or touch device
     */
@@ -55,30 +53,44 @@ export default class ReactMaterialUiNotifications extends Component {
     muiTheme: PropTypes.object.isRequired
   }
 
-  // merge local styles and overriding styles and return it
-  getStyle = () => {
-    const style = {
-      position: 'fixed',
-      minWidth: 325
-    }
-
-    return Object.assign(style, this.props.rootStyle)
+  /**
+   * copy some values to global for use in internal functions
+   */
+  componentWillMount() {
+    maxNotifications = this.props.maxNotifications
   }
+
+  // add notification method
+  static showNotification = (notification) => {
+    let tempNotifications = notifications
+    // push a new notification to notifications
+    notification.open = true
+    notification.count = count
+    tempNotifications.push(notification)
+    // filter and keep only the open ones
+    tempNotifications = tempNotifications.filter(ReactMaterialUiNotifications.filterOpen)
+    // shuffle notifications and set actual notifications to the temp ones to update render
+    notifications = ReactMaterialUiNotifications.shuffleNotifications(tempNotifications)
+    // update counter
+    count++
+  }
+
+  /**
+  * filter out and only keep the open notifications
+  * @method
+  * @param  {object} notification [a notification object]
+  */
+  static filterOpen = (notification) => notification.open
 
   /**
   * perform operations like capping on the operations before doing them
   */
-  getInnerData = () => {
-    let innerData = this.props.children.constructor === Array ? this.props.children : [this.props.children]
-    /**
-    * remove the excess notifications,
-    * TODO safely remove them with animation, by passing open as false and doing newprops forcefully change the old one with willreceivenewprops function
-    */
-    if (innerData.length > this.props.maxNotifications) {
-      for (let i in innerData) {
-        if (typeof innerData[i] === 'object' && (!innerData[i].hasOwnProperty('priority') || !innerData[i].priority)) {
-          innerData.splice(i, 1)
-          if (innerData.length === this.props.maxNotifications) {
+  static shuffleNotifications = (tempNotifications) => {
+    if (tempNotifications.length > maxNotifications) {
+      for (let i in tempNotifications) {
+        if (typeof tempNotifications[i] === 'object' && (!tempNotifications[i].hasOwnProperty('priority') || !tempNotifications[i].priority)) {
+          tempNotifications.splice(i, 1)
+          if (tempNotifications.length === maxNotifications) {
             break
           }
         }
@@ -87,7 +99,7 @@ export default class ReactMaterialUiNotifications extends Component {
     /**
     * sort the priority notifications to the top
     */
-    innerData.sort(function(a, b) {
+    tempNotifications.sort(function(a, b) {
       var priorityA = a.priority
       var priorityB = b.priority
       if (!priorityA && priorityB) {
@@ -99,7 +111,17 @@ export default class ReactMaterialUiNotifications extends Component {
       // other cases they are considered same
       return 0;
     })
-    return innerData
+    return tempNotifications
+  }
+
+  // merge local styles and overriding styles and return it
+  getStyle = () => {
+    const style = {
+      position: 'fixed',
+      minWidth: 325
+    }
+
+    return Object.assign(style, this.props.rootStyle)
   }
 
   /**
@@ -111,19 +133,14 @@ export default class ReactMaterialUiNotifications extends Component {
   }
 
   render() {
-    /**
-    * convert object to array
-    */
-    let innerData = this.getInnerData()
-
     return (
       <div
         style={this.getStyle()}
       >
-        {innerData.map((props, index) => {
+        {notifications.map((props, index) => {
           return <Notification
             open={true}
-            key={index}
+            key={props.count}
             {...this.getProps(props)}
           />
         })}
@@ -175,6 +192,7 @@ class Notification extends Component {
     overflowText: PropTypes.string,
     /**
     * additional overflow content, like buttons
+    * TODO implement the on click dismiss action like done in card (material-ui) as actAsExpander
     */
     overflowContent: PropTypes.element,
     /**

@@ -1,12 +1,6 @@
 // table data for all the options
 const ComponentData = [
   {
-    prop: 'children',
-    types: 'array, object',
-    default: '',
-    description: 'Notification children, here each oject contains the Notification in an Array'
-  },
-  {
     prop: 'desktop',
     types: 'bool',
     default: 'false',
