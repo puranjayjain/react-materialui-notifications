@@ -17,7 +17,7 @@
   "scripts": {
     "start": "gulp"
   },
-  "license" : "MIT ",
+  "license": "MIT ",
   "devDependencies": {
     "babel-core": "^6.11.4",
     "babel-plugin-transform-class-properties": "^6.11.5",
@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "material-ui": "^0.15.2",
-    "react": "^15.2.1",
+    "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-tap-event-plugin": "^1.0.0"
