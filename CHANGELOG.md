@@ -29,3 +29,6 @@
 
 * removed children prop in favor of static showNotification method
 * you can now only use one ReactMaterialUiNotifications component per app, so try to put it in a common spot, this was done to solve the problem of incorrect notifications getting displayed and to introduce the dismiss action in a future release
+
+## v0.4.1
+* Bumped versions of dependencies to newer versions
