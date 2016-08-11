@@ -45,7 +45,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "material-ui": "^0.15.3",
+    "material-ui": "^0.15.4",
     "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.3.0",
     "react-dom": "^15.3.0",
