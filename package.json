@@ -35,7 +35,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "moment": "^2.15.2",
-    "pretty-hrtime": "^1.0.2",
+    "pretty-hrtime": "^1.0.3",
     "pump": "^1.0.1",
     "recompose": "^0.20.2",
     "require-dir": "^0.3.1",
