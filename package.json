@@ -34,7 +34,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "moment": "^2.15.2",
+    "moment": "^2.16.0",
     "pretty-hrtime": "^1.0.3",
     "pump": "^1.0.1",
     "recompose": "^0.20.2",
