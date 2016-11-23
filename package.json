@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "material-ui": "^0.16.4",
-    "react": "^15.4.0",
+    "react": "^15.4.1",
     "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.4.0",
     "react-tap-event-plugin": "^2.0.1"
