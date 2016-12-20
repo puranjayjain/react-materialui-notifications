@@ -3,7 +3,7 @@
   "description": "Spec compliant notifications for react and material ui users",
   "main": "./lib/ReactMaterialUiNotifications.js",
   "authors": [
-    "Puranjay Jain <puranjay.jain@st.niituniversity.in>"
+    "Puranjay Jain <me+bower@puranjayjain.com>"
   ],
   "license": "MIT",
   "keywords": [
