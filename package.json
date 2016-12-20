@@ -13,6 +13,7 @@
     "type": "git",
     "url": "https://github.com/puranjayjain/react-materialui-notifications.git"
   },
+  "author": "Puranjay Jain <me+npm@puranjayjain.com>",
   "main": "./lib/ReactMaterialUiNotifications.js",
   "scripts": {
     "start": "gulp"
