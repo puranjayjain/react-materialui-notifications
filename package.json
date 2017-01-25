@@ -43,7 +43,7 @@
     "run-sequence": "^1.2.2",
     "underscore": "^1.8.3",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.9.0"
   },
   "dependencies": {
     "material-ui": "^0.16.7",
