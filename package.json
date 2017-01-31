@@ -27,7 +27,7 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "babelify": "^7.3.0",
-    "browser-sync": "^2.18.6",
+    "browser-sync": "^2.18.7",
     "browserify": "^14.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
