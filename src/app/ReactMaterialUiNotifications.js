@@ -101,12 +101,12 @@ export default class ReactMaterialUiNotifications extends Component {
          * sort the priority notifications to the top
          */
         tempNotifications.sort(function (a, b) {
-            var priorityA = a.priority
-            var priorityB = b.priority
+            const priorityA = a.priority,
+            priorityB = b.priority
             if (!priorityA && priorityB) {
                 return 1
             }
-            if (priorityA && !priorityB) {
+            else if (priorityA && !priorityB) {
                 return -1
             }
             // other cases they are considered same
@@ -119,6 +119,7 @@ export default class ReactMaterialUiNotifications extends Component {
     getStyle = () => {
         const style = {
             position: 'fixed',
+            zIndex: 1,
             minWidth: 325
         }
 
@@ -415,11 +416,11 @@ class Notification extends Component {
         if (this.props.overflowText) {
             expandedText =
                 <span>
-        <Divider inset={true}/>
-        <div style={overflowStyle}>
-          {this.props.overflowText}
-        </div>
-      </span>
+                  <Divider inset={true}/>
+                  <div style={overflowStyle}>
+                    {this.props.overflowText}
+                  </div>
+                </span>
         }
         else {
             expandedText = <span></span>
@@ -431,11 +432,11 @@ class Notification extends Component {
         if (this.props.overflowContent) {
             expandedAction =
                 <span>
-        <Divider inset={true}/>
-        <div style={overflowContentStyle}>
-          {this.props.overflowContent}
-        </div>
-      </span>
+                  <Divider inset={true}/>
+                  <div style={overflowContentStyle}>
+                    {this.props.overflowContent}
+                  </div>
+                </span>
         }
         else {
             expandedAction = <span></span>
