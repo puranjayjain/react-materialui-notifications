@@ -1,5 +1,7 @@
 # react-materialui-notifications
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/puranjayjain/react-materialui-notifications.svg)](https://greenkeeper.io/)
+
 [![GitHub version](https://img.shields.io/github/release/puranjayjain/react-materialui-notifications.svg)](https://badge.fury.io/gh/puranjayjain%2Freact-materialui-notifications)
 [![npm version](https://badge.fury.io/js/react-materialui-notifications.svg)](https://badge.fury.io/js/react-materialui-notifications)
 
