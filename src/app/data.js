@@ -70,6 +70,12 @@ const NotificationData = [
     'description': 'Color of the notification icon'
   },
   {
+    'prop': 'onClick',
+    'types': 'function',
+    'default': '',
+    'description': 'If the onClick is passed then the notification will be clickable and it will close automatically after it was clicked.'
+  },
+  {
     'prop': 'overflowText',
     'types': 'string',
     'default': '',

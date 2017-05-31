@@ -191,6 +191,10 @@ class Notification extends Component {
          */
         iconFillColor: PropTypes.string,
         /**
+         * When the notification is clicked, if not passed it won't be clicakble
+         */
+        onClick: PropTypes.func,
+        /**
          * open which tells whether to display the message
          */
         open: PropTypes.bool,
@@ -211,6 +215,10 @@ class Notification extends Component {
          * it is a priority notification
          */
         priority: PropTypes.bool,
+        /**
+         * Injected from parent, needed to remove the notification
+         */
+        removeNotification: PropTypes.func,
         /**
          * Override the inline-styles of the root element.
          */
@@ -476,7 +484,6 @@ class Notification extends Component {
                 transitionLeaveTimeout={this.props.transitionLeaveTimeout ? this.props.transitionLeaveTimeout : 0}
             >
                 <Paper
-                    key={this.state.open}
                     style={this.getStyle()}
                     zDepth={this.props.zDepth}
                     transitionEnabled={false}
@@ -490,6 +497,13 @@ class Notification extends Component {
                             insetChildren={true}
                             rightIconButton={desktopClose}
                             innerDivStyle={listItemStyle}
+                            disabled={this.props.onClick ? false : true}
+                            onTouchTap={() => {
+                                if (this.props.onClick) {
+                                    this.props.onClick();
+                                    this.props.removeNotification();
+                                }
+                            }}
                         />
                         {timestampEl}
                     </List>

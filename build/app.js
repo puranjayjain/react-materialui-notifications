@@ -44611,6 +44611,11 @@ var NotificationData = [{
   'default': '#fff',
   'description': 'Color of the notification icon'
 }, {
+  'prop': 'onClick',
+  'types': 'function',
+  'default': '',
+  'description': 'If the onClick is passed then the notification will be clickable and it will close automatically after it was clicked.'
+}, {
   'prop': 'overflowText',
   'types': 'string',
   'default': '',
@@ -45605,6 +45610,8 @@ var Notification = function (_Component2) {
     }, {
         key: 'render',
         value: function render() {
+            var _this5 = this;
+
             var iconButtonStyle = {
                 width: 36,
                 height: 36,
@@ -45730,7 +45737,6 @@ var Notification = function (_Component2) {
                 _react2.default.createElement(
                     _Paper2.default,
                     {
-                        key: this.state.open,
                         style: this.getStyle(),
                         zDepth: this.props.zDepth,
                         transitionEnabled: false
@@ -45745,7 +45751,14 @@ var Notification = function (_Component2) {
                             leftIcon: this.getNotificationIcon(),
                             insetChildren: true,
                             rightIconButton: desktopClose,
-                            innerDivStyle: listItemStyle
+                            innerDivStyle: listItemStyle,
+                            disabled: this.props.onClick ? false : true,
+                            onTouchTap: function onTouchTap() {
+                                if (_this5.props.onClick) {
+                                    _this5.props.onClick();
+                                    _this5.props.removeNotification();
+                                }
+                            }
                         }),
                         timestampEl
                     ),
@@ -45789,6 +45802,10 @@ Notification.propTypes = {
      */
     iconFillColor: _react.PropTypes.string,
     /**
+     * When the notification is clicked, if not passed it won't be clicakble
+     */
+    onClick: _react.PropTypes.func,
+    /**
      * open which tells whether to display the message
      */
     open: _react.PropTypes.bool,
@@ -45809,6 +45826,10 @@ Notification.propTypes = {
      * it is a priority notification
      */
     priority: _react.PropTypes.bool,
+    /**
+     * Injected from parent, needed to remove the notification
+     */
+    removeNotification: _react.PropTypes.func,
     /**
      * Override the inline-styles of the root element.
      */
