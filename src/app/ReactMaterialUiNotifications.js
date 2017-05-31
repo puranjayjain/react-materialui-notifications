@@ -242,9 +242,6 @@ class Notification extends Component {
     }
 
     componentWillMount() {
-        this.setState({
-            open: this.props.open
-        })
         /**
          * if autohide is set then use it
          */
@@ -267,7 +264,7 @@ class Notification extends Component {
      */
     getStyle = () => {
         const style = {
-            display: this.state.open ? 'block' : 'none',
+            display: 'block',
             textAlign: 'left',
             borderRadius: 3,
             margin: '12px auto'

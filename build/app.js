@@ -45461,7 +45461,7 @@ var Notification = function (_Component2) {
 
         return _ret2 = (_temp2 = (_this3 = _possibleConstructorReturn(this, (_ref2 = Notification.__proto__ || Object.getPrototypeOf(Notification)).call.apply(_ref2, [this].concat(args))), _this3), _this3.getStyle = function () {
             var style = {
-                display: _this3.state.open ? 'block' : 'none',
+                display: 'block',
                 textAlign: 'left',
                 borderRadius: 3,
                 margin: '12px auto'
@@ -45567,9 +45567,6 @@ var Notification = function (_Component2) {
         value: function componentWillMount() {
             var _this4 = this;
 
-            this.setState({
-                open: this.props.open
-            });
             /**
              * if autohide is set then use it
              */
