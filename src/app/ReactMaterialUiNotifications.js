@@ -134,6 +134,11 @@ export default class ReactMaterialUiNotifications extends Component {
         return Object.assign(props, pProps)
     }
 
+    removeNotification(index) {
+        notifications.splice(index, 1);
+        this.forceUpdate();
+    }
+
     render() {
         return (
             <div
@@ -141,6 +146,7 @@ export default class ReactMaterialUiNotifications extends Component {
             >
                 {notifications.map((props, index) => {
                     return <Notification
+                        removeNotification={() => {this.removeNotification(index)}}
                         open={true}
                         key={props.count}
                         {...this.getProps(props)}
@@ -244,7 +250,7 @@ class Notification extends Component {
          */
         if (this.props.autoHide) {
             this.autoHideTimeout = setTimeout(() => {
-                this.setState({open: false})
+                this.props.removeNotification();
             }, this.props.autoHide)
         }
     }
@@ -275,8 +281,7 @@ class Notification extends Component {
      * cancel the settimeout function of the autohide method if the open is changed before timeout ends
      */
     onCloseNotification = () => {
-        clearTimeout(this.autoHideTimeout)
-        this.setState({open: false})
+        this.props.removeNotification();
     }
 
     /**
