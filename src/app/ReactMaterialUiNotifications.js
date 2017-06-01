@@ -134,6 +134,11 @@ export default class ReactMaterialUiNotifications extends Component {
         return Object.assign(props, pProps)
     }
 
+    removeNotification(index) {
+        notifications.splice(index, 1);
+        this.forceUpdate();
+    }
+
     render() {
         return (
             <div
@@ -141,6 +146,7 @@ export default class ReactMaterialUiNotifications extends Component {
             >
                 {notifications.map((props, index) => {
                     return <Notification
+                        removeNotification={() => {this.removeNotification(index)}}
                         open={true}
                         key={props.count}
                         {...this.getProps(props)}
@@ -185,6 +191,10 @@ class Notification extends Component {
          */
         iconFillColor: PropTypes.string,
         /**
+         * When the notification is clicked, if not passed it won't be clicakble
+         */
+        onClick: PropTypes.func,
+        /**
          * open which tells whether to display the message
          */
         open: PropTypes.bool,
@@ -205,6 +215,10 @@ class Notification extends Component {
          * it is a priority notification
          */
         priority: PropTypes.bool,
+        /**
+         * Injected from parent, needed to remove the notification
+         */
+        removeNotification: PropTypes.func,
         /**
          * Override the inline-styles of the root element.
          */
@@ -236,15 +250,12 @@ class Notification extends Component {
     }
 
     componentWillMount() {
-        this.setState({
-            open: this.props.open
-        })
         /**
          * if autohide is set then use it
          */
         if (this.props.autoHide) {
             this.autoHideTimeout = setTimeout(() => {
-                this.setState({open: false})
+                this.props.removeNotification();
             }, this.props.autoHide)
         }
     }
@@ -261,7 +272,7 @@ class Notification extends Component {
      */
     getStyle = () => {
         const style = {
-            display: this.state.open ? 'block' : 'none',
+            display: 'block',
             textAlign: 'left',
             borderRadius: 3,
             margin: '12px auto'
@@ -275,8 +286,7 @@ class Notification extends Component {
      * cancel the settimeout function of the autohide method if the open is changed before timeout ends
      */
     onCloseNotification = () => {
-        clearTimeout(this.autoHideTimeout)
-        this.setState({open: false})
+        this.props.removeNotification();
     }
 
     /**
@@ -474,7 +484,6 @@ class Notification extends Component {
                 transitionLeaveTimeout={this.props.transitionLeaveTimeout ? this.props.transitionLeaveTimeout : 0}
             >
                 <Paper
-                    key={this.state.open}
                     style={this.getStyle()}
                     zDepth={this.props.zDepth}
                     transitionEnabled={false}
@@ -488,6 +497,13 @@ class Notification extends Component {
                             insetChildren={true}
                             rightIconButton={desktopClose}
                             innerDivStyle={listItemStyle}
+                            disabled={this.props.onClick ? false : true}
+                            onTouchTap={() => {
+                                if (this.props.onClick) {
+                                    this.props.onClick();
+                                    this.props.removeNotification();
+                                }
+                            }}
                         />
                         {timestampEl}
                     </List>
