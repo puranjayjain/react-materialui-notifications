@@ -3,8 +3,6 @@
 [![GitHub version](https://img.shields.io/github/release/puranjayjain/react-materialui-notifications.svg)](https://badge.fury.io/gh/puranjayjain%2Freact-materialui-notifications)
 [![npm version](https://badge.fury.io/js/react-materialui-notifications.svg)](https://badge.fury.io/js/react-materialui-notifications)
 
-[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
-
 [![Issues](https://img.shields.io/github/issues/puranjayjain/react-materialui-notifications.svg)](https://github.com/puranjayjain/react-materialui-notifications/issues)
 [![Forks](https://img.shields.io/github/forks/puranjayjain/react-materialui-notifications.svg)](https://github.com/puranjayjain/react-materialui-notifications/network)
 [![Stars](https://img.shields.io/github/stars/puranjayjain/react-materialui-notifications.svg)](https://github.com/puranjayjain/react-materialui-notifications/stargazers)
@@ -17,7 +15,7 @@
 # Installation
 
 * Use the latest github release
-* or Install via `npm i react-materialui-notifications`
+* or Install via `npm i react-materialui-notifications --save`
 
 # Demo
 
@@ -36,8 +34,8 @@ but we'll adhere to those rules whenever possible.
 
 # Development
 
-* To test the project use `gulp run.bat`
-* To release the project use `gulp run.bat` then run `gulp release.bat`
+* If developing the project use `gulp run.bat` or the equivalent command written in it.
+* To release the project use `gulp run.bat` then run `gulp release.bat` or the equivalent command written in them.
 
 # TODO
 - [x] a lot of core functionality

@@ -1,9 +1,10 @@
 /**
  *  material design spec compliant notifications for react and material-ui users
  */
-import React, {PropTypes, cloneElement, Component} from 'react'
-import propTypes from 'material-ui/utils/propTypes'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import React, {cloneElement, Component} from 'react'
+import PropTypes from 'prop-types'
+import muiPropTypes from 'material-ui/utils/propTypes'
+import { CSSTransitionGroup } from 'react-transition-group' 
 
 import Paper from 'material-ui/Paper'
 import {List, ListItem} from 'material-ui/List'
@@ -20,7 +21,7 @@ let notifications = [],
     maxNotifications
 
 export default class ReactMaterialUiNotifications extends Component {
-    static propTypes = {
+    static muiPropTypes = {
         /**
          * Desktop device or touch device
          */
@@ -110,7 +111,7 @@ export default class ReactMaterialUiNotifications extends Component {
                 return -1
             }
             // other cases they are considered same
-            return 0;
+            return 0
         })
         return tempNotifications
     }
@@ -135,23 +136,23 @@ export default class ReactMaterialUiNotifications extends Component {
     }
 
     removeNotification(index) {
-        notifications.splice(index, 1);
-        this.forceUpdate();
+        notifications.splice(index, 1)
+        this.forceUpdate()
     }
 
     render() {
         return (
             <div
-                style={this.getStyle()}
+              style={this.getStyle()}
             >
-                {notifications.map((props, index) => {
-                    return <Notification
-                        removeNotification={() => {this.removeNotification(index)}}
-                        open={true}
-                        key={props.count}
-                        {...this.getProps(props)}
-                    />
-                })}
+              {notifications.map((props, index) => {
+                return <Notification
+                  removeNotification={() => {this.removeNotification(index)}}
+                  open={true}
+                  key={props.count}
+                  {...this.getProps(props)}
+                />
+              })}
             </div>
         )
     }
@@ -161,7 +162,7 @@ class Notification extends Component {
     /**
      * these props are named after https://material.google.com/patterns/notifications.html#notifications-content
      */
-    static propTypes = {
+    static muiPropTypes = {
         /**
          * additional text for display
          */
@@ -234,7 +235,7 @@ class Notification extends Component {
         /**
          * This number represents the zDepth of the paper shadow covering the message.
          */
-        zDepth: propTypes.zDepth
+        zDepth: muiPropTypes.zDepth
     }
 
     /**
@@ -255,7 +256,7 @@ class Notification extends Component {
          */
         if (this.props.autoHide) {
             this.autoHideTimeout = setTimeout(() => {
-                this.props.removeNotification();
+                this.props.removeNotification()
             }, this.props.autoHide)
         }
     }
@@ -286,7 +287,7 @@ class Notification extends Component {
      * cancel the settimeout function of the autohide method if the open is changed before timeout ends
      */
     onCloseNotification = () => {
-        this.props.removeNotification();
+        this.props.removeNotification()
     }
 
     /**
@@ -332,14 +333,14 @@ class Notification extends Component {
                     })
                 iconEl =
                     <div style={leftIconBodyStyle}>
-                        <Avatar
-                            src={this.props.avatar}
-                            size={44}
-                            style={leftAvatarStyle}
-                        />
-                        <div style={leftIconStyle}>
-                            {leftIcon}
-                        </div>
+                      <Avatar
+                        src={this.props.avatar}
+                        size={44}
+                        style={leftAvatarStyle}
+                      />
+                      <div style={leftIconStyle}>
+                        {leftIcon}
+                      </div>
                     </div>
             }
             else {
@@ -364,7 +365,7 @@ class Notification extends Component {
                     })
                 iconEl =
                     <div style={leftIconBodyStyle}>
-                        {leftIcon}
+                      {leftIcon}
                     </div>
             }
         }
@@ -458,11 +459,11 @@ class Notification extends Component {
         if (this.props.desktop) {
             desktopClose =
                 <IconButton
-                    style={iconButtonStyle}
-                    iconStyle={iconStyle}
-                    onTouchTap={this.onCloseNotification}
+                  style={iconButtonStyle}
+                  iconStyle={iconStyle}
+                  onTouchTap={this.onCloseNotification}
                 >
-                    <Close />
+                  <Close />
                 </IconButton>
         }
 
@@ -474,43 +475,43 @@ class Notification extends Component {
         }
 
         return (
-            <ReactCSSTransitionGroup
-                transitionName={this.props.transitionName ? this.props.transitionName : ""}
-                transitionAppear={this.props.transitionAppear ? this.props.transitionAppear : false}
-                transitionEnter={this.props.transitionEnter ? this.props.transitionEnter : false}
-                transitionLeave={this.props.transitionLeave ? this.props.transitionLeave : false}
-                transitionAppearTimeout={this.props.transitionAppearTimeout ? this.props.transitionAppearTimeout : 0}
-                transitionEnterTimeout={this.props.transitionEnterTimeout ? this.props.transitionEnterTimeout : 0}
-                transitionLeaveTimeout={this.props.transitionLeaveTimeout ? this.props.transitionLeaveTimeout : 0}
+            <CSSTransitionGroup
+              transitionName={this.props.transitionName ? this.props.transitionName : ""}
+              transitionAppear={this.props.transitionAppear ? this.props.transitionAppear : false}
+              transitionEnter={this.props.transitionEnter ? this.props.transitionEnter : false}
+              transitionLeave={this.props.transitionLeave ? this.props.transitionLeave : false}
+              transitionAppearTimeout={this.props.transitionAppearTimeout ? this.props.transitionAppearTimeout : 0}
+              transitionEnterTimeout={this.props.transitionEnterTimeout ? this.props.transitionEnterTimeout : 0}
+              transitionLeaveTimeout={this.props.transitionLeaveTimeout ? this.props.transitionLeaveTimeout : 0}
             >
-                <Paper
-                    style={this.getStyle()}
-                    zDepth={this.props.zDepth}
-                    transitionEnabled={false}
-                >
-                    <List style={listStyle}>
-                        <ListItem
-                            primaryText={this.props.title}
-                            secondaryText={secondaryText}
-                            secondaryTextLines={this.props.additionalLines}
-                            leftIcon={this.getNotificationIcon()}
-                            insetChildren={true}
-                            rightIconButton={desktopClose}
-                            innerDivStyle={listItemStyle}
-                            disabled={this.props.onClick ? false : true}
-                            onTouchTap={() => {
-                                if (this.props.onClick) {
-                                    this.props.onClick();
-                                    this.props.removeNotification();
-                                }
-                            }}
-                        />
-                        {timestampEl}
-                    </List>
-                    {expandedAction}
-                    {expandedText}
-                </Paper>
-            </ReactCSSTransitionGroup>
+              <Paper
+                style={this.getStyle()}
+                zDepth={this.props.zDepth}
+                transitionEnabled={false}
+              >
+                <List style={listStyle}>
+                  <ListItem
+                    primaryText={this.props.title}
+                    secondaryText={secondaryText}
+                    secondaryTextLines={this.props.additionalLines}
+                    leftIcon={this.getNotificationIcon()}
+                    insetChildren={true}
+                    rightIconButton={desktopClose}
+                    innerDivStyle={listItemStyle}
+                    disabled={this.props.onClick ? false : true}
+                    onTouchTap={() => {
+                      if (this.props.onClick) {
+                        this.props.onClick()
+                        this.props.removeNotification()
+                      }
+                    }}
+                  />
+                  {timestampEl}
+                </List>
+                {expandedAction}
+                {expandedText}
+              </Paper>
+            </CSSTransitionGroup>
         )
     }
 }

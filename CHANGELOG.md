@@ -32,3 +32,9 @@
 
 ## v0.4.1
 * Bumped versions of dependencies to newer versions
+
+## v0.5.0
+* Warning this release contains breaking changes in dependencies.
+* react-addons-css-transition-group changed to react-transition-group to remove warning.
+* removed proptypes from react instead imported from prop-types library 
+* Special thanks to [Gonçalo Margalho @DevAlien](https://github.com/DevAlien) for making that wonderful hotfix
