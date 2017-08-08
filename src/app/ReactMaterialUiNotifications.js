@@ -29,7 +29,7 @@ export default class ReactMaterialUiNotifications extends Component {
         /**
          * maximum number of notifications to display
          */
-        maxNotifications: React.PropTypes.oneOfType([
+        maxNotifications: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number
         ]),
