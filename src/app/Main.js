@@ -17,7 +17,7 @@ import Github from './Github'
 import ReactMaterialUiNotifications from './ReactMaterialUiNotifications'
 import moment from 'moment'
 
-import {ComponentData, NotificationData} from './Data'
+import {ComponentData, NotificationData} from './data'
 
 const styles = {
   appbar: {
